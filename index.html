@@ -3,14 +3,14 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>你真的只是喜歡忙嗎？｜WC30-V1</title>
+<title>你真的只是喜歡忙嗎？｜WC30-V2</title>
 <style>
 *{box-sizing:border-box}
 body{margin:0;min-height:100vh;font-family:"Noto Sans TC","Microsoft JhengHei",Arial,sans-serif;background:linear-gradient(135deg,#f5f7ff,#fff7fb);color:#1e293b}
-.container{width:min(760px,92%);margin:auto;padding:32px 0 50px}
+.container{width:min(760px,92%);margin:auto;padding:28px 0 50px}
 .card{background:#fff;border-radius:24px;padding:34px;box-shadow:0 12px 40px rgba(15,23,42,.08)}
 .hidden{display:none!important}
-h1{margin:0 0 16px;text-align:center;font-size:30px;line-height:1.4}
+h1{margin:0 0 14px;text-align:center;font-size:30px;line-height:1.4}
 .subtitle{text-align:center;color:#64748b;line-height:1.8;margin-bottom:30px}
 label{display:block;font-weight:700;margin:0 0 8px}
 input{width:100%;padding:14px;border:1px solid #cbd5e1;border-radius:12px;font-size:16px;margin-bottom:18px}
@@ -34,21 +34,23 @@ button{border:0;border-radius:13px;padding:14px 18px;font-size:16px;font-weight:
 .nav button{flex:1}
 .code{margin-top:20px;background:#0f172a;color:#e2e8f0;padding:18px;border-radius:14px;word-break:break-all;font:13px/1.6 monospace}
 .note{margin-top:18px;padding:14px;background:#f1f5f9;border-radius:12px;color:#475569;line-height:1.7;font-size:14px}
+.badge{display:inline-block;padding:6px 10px;border-radius:999px;background:#eef2ff;color:#4f46e5;font-size:12px;font-weight:800;margin-bottom:12px}
 @media(max-width:600px){.container{padding:16px 0}.card{padding:22px 17px;border-radius:18px}h1{font-size:25px}.question{font-size:19px}}
 </style>
 </head>
 <body>
 <div class="container">
 <section id="startPage" class="card">
+<div style="text-align:center"><span class="badge">WC30-V2</span></div>
 <h1>你真的只是喜歡忙嗎？</h1>
-<div class="subtitle">一場不知道自己正在被測什麼的抽象心理測驗。<br>請依照第一直覺回答。</div>
+<div class="subtitle">一場不知道自己正在被測什麼的抽象心理測驗。<br>請依照第一直覺回答，不需要猜測「哪個答案比較好」。</div>
 <label for="name">姓名</label>
 <input id="name" type="text" maxlength="30" autocomplete="name" placeholder="請輸入姓名">
 <label for="birthday">生日</label>
 <input id="birthday" type="date" autocomplete="bday">
 <div id="startError" class="error"></div>
 <button id="startBtn" class="primary" type="button">開始測驗</button>
-<div class="note">共 30 題。沒有正確答案，請選最符合第一直覺的選項。</div>
+<div class="note">共 30 題。題目會隨機排列選項；網站不會直接顯示心理結果。</div>
 </section>
 
 <section id="quizPage" class="card hidden">
@@ -67,181 +69,69 @@ button{border:0;border-radius:13px;padding:14px 18px;font-size:16px;font-weight:
 </section>
 
 <section id="resultPage" class="card hidden">
+<div style="text-align:center"><span class="badge">WC30-V2</span></div>
 <h1>測驗完成</h1>
 <p style="text-align:center;line-height:1.8">請複製以下結果代碼，交給測驗分析者。</p>
 <div id="resultCode" class="code"></div>
 <button id="copyBtn" class="primary" type="button" style="margin-top:12px">複製結果代碼</button>
-<div id="copyStatus" class="note">網站不會直接顯示心理測驗結果。分析者可依 WC30-V1 的固定規則解碼並分析 8 個維度。</div>
+<div id="copyStatus" class="note">結果代碼包含姓名、生日、30 題答案與 V2 計分資料。網站不直接顯示分類結果。</div>
 </section>
 </div>
 
 <script>
 "use strict";
-
-const TEST_VERSION = "WC30-V1";
-const TOTAL_QUESTIONS = 30;
-
-const questions = [
-{"text":"你走進一棟陌生的大樓，電梯停在四個樓層。你會去哪裡？","options":["一樓：窗外有陽光，門口放著一張長椅。","七樓：走廊很安靜，盡頭有一盞還亮著的燈。","十二樓：房間裡堆滿尚未整理的物品。","頂樓：什麼都沒有，只有一張桌子與一支筆。"],"dims":["WD","RE"],"dir":0},
-{"text":"森林裡出現四條路，你只能選一條。","options":["有很多腳印，但看不到盡頭。","路上長滿柔軟的草，幾乎沒有人走過。","路旁立著一塊寫著「尚未完成」的木牌。","通往山頂，途中沒有任何休息的地方。"],"dims":["AC","TA"],"dir":1},
-{"text":"桌上有四個盒子，你最想打開哪一個？","options":["裝著一張空白紙的盒子。","裝著一把鑰匙的盒子。","裝著一張未完成地圖的盒子。","裝著一顆會發光的小石頭的盒子。"],"dims":["CT","SE"],"dir":2},
-{"text":"你在海邊發現一艘小船，船上只有一樣東西。","options":["一張航海圖。","一張毯子。","一盞沒有熄滅的燈。","一個裝滿工具的箱子。"],"dims":["WD","AC"],"dir":3},
-{"text":"鐘面上的時間突然停止了。你第一個注意到什麼？","options":["停止在哪一個數字。","周圍的人有沒有發現。","自己突然多出了多少時間。","鐘為什麼會停止。"],"dims":["TA","RE"],"dir":1},
-{"text":"你進入一間房間，裡面只有四樣東西。","options":["一張床。","一面鏡子。","一張桌子。","一扇沒有把手的門。"],"dims":["RS","CT"],"dir":3},
-{"text":"一場雨即將開始，你只能帶走一樣東西。","options":["雨傘。","地圖。","手錶。","一本還沒寫完的書。"],"dims":["WD","SE"],"dir":0},
-{"text":"山頂有四個位置可以坐下。","options":["能看到整座城市的位置。","背風而且很舒服的位置。","靠近一張告示牌的位置。","離山頂最後一段路最近的位置。"],"dims":["AC","RE"],"dir":2},
-{"text":"你發現一扇門，門上沒有任何標誌。","options":["直接推開。","先觀察周圍。","尋找鑰匙。","先記住門的位置，之後再回來。"],"dims":["CT","TA"],"dir":3},
-{"text":"一條河流中央有四座橋。","options":["最短但最窄的橋。","最長但最穩的橋。","看起來幾乎沒人走的橋。","橋上放著一塊寫著「請完成它」的牌子。"],"dims":["RS","WD"],"dir":1},
-{"text":"你撿到一本筆記本，最後一頁寫著一句話：「還差一點。」你會？","options":["繼續寫下去。","把筆記本收起來。","想知道前面寫了什麼。","把最後一句話擦掉。"],"dims":["AC","TA"],"dir":2},
-{"text":"你看到天空出現四種顏色。","options":["深藍。","金色。","灰白。","橘紅。"],"dims":["RE","SE"],"dir":0},
-{"text":"你得到一張只能使用一次的車票。","options":["去一個從沒去過的地方。","回到熟悉的地方。","去一個據說永遠不會結束的地方。","去一個沒有人知道你會出現的地方。"],"dims":["WD","CT"],"dir":3},
-{"text":"一座城市突然停電，你第一個想做什麼？","options":["找出停電原因。","找一個安全舒服的地方等待。","確認重要的事情是否受到影響。","看看黑暗中的城市。"],"dims":["RS","TA"],"dir":1},
-{"text":"你看到一座房子，窗外看得到四種景象。","options":["正在施工的建築。","安靜的森林。","繁忙的街道。","沒有任何東西的天空。"],"dims":["AC","SE"],"dir":2},
-{"text":"你得到一個可以讓時間多出一小時的能力。你會把這一小時放在哪裡？","options":["清理還沒完成的事情。","睡覺。","做一件一直想做的事情。","提前處理明天的事情。"],"dims":["WD","RE"],"dir":0},
-{"text":"你在沙漠中看到一座小屋。","options":["門開著。","門鎖著。","屋頂有煙。","屋外有一張桌子，上面放著工具。"],"dims":["RS","CT"],"dir":3},
-{"text":"四個人同時把東西交給你，說：「這個很重要。」你會先做什麼？","options":["全部接下來。","問清楚哪一件最急。","先放著，等有空再處理。","選一件自己最有把握的。"],"dims":["TA","SE"],"dir":2},
-{"text":"你看到一座還沒蓋完的房子。","options":["想知道最後會長什麼樣子。","想進去看看。","想幫忙把它蓋完。","覺得未完成也沒有關係。"],"dims":["AC","WD"],"dir":1},
-{"text":"你的桌面上有一張紙，上面只有四個字：「明天再處理。」你的第一反應是？","options":["今天先處理掉。","真的明天再說。","先確認明天有沒有時間。","把它放到最容易看到的位置。"],"dims":["RE","RS"],"dir":3},
-{"text":"你走在一條長廊，牆上每隔十公尺就有一扇門。","options":["每扇門都想看看。","選一扇最特別的。","一直走到盡頭。","找一個可以坐下來的地方。"],"dims":["CT","TA"],"dir":0},
-{"text":"你收到一封沒有寄件人的信。","options":["立刻打開。","先研究信封。","先放著。","等到有完整時間時再看。"],"dims":["WD","SE"],"dir":2},
-{"text":"你站在一個十字路口，四個方向都沒有路標。","options":["選看起來最快的路。","選最安全的路。","選最少人走的路。","先停下來觀察。"],"dims":["AC","RE"],"dir":1},
-{"text":"一座花園裡有一棵樹沒有結果。","options":["想辦法讓它結果。","覺得沒有結果也沒關係。","研究它為什麼不結果。","等待下一個季節。"],"dims":["RS","WD"],"dir":3},
-{"text":"你找到一個抽屜，裡面有一張清單，但上面少了一項。","options":["想辦法找出缺少的那一項。","重新整理整張清單。","直接忽略。","先把其他項目完成。"],"dims":["TA","CT"],"dir":2},
-{"text":"夜裡你看到遠方有一盞燈一直亮著。","options":["走過去看看。","記住它的位置。","覺得有人處理就好。","想知道為什麼一直亮著。"],"dims":["SE","RE"],"dir":0},
-{"text":"你面前有一個拼圖，只剩最後三塊。","options":["立刻完成。","先休息一下。","研究三塊的位置。","把拼圖收起來。"],"dims":["WD","AC"],"dir":1},
-{"text":"你獲得一張空白日曆。","options":["先安排重要事情。","什麼都不寫。","安排自己想做的事情。","先把每天都填滿。"],"dims":["RS","TA"],"dir":3},
-{"text":"你發現自己的房間有一個角落一直沒有整理。","options":["今天整理掉。","等真正有空再整理。","先整理最重要的部分。","覺得它存在也沒什麼。"],"dims":["CT","SE"],"dir":2},
-{"text":"旅程最後一天，你發現還有一件事情沒完成。","options":["無論如何完成它。","評估是否值得完成。","放棄，享受最後一天。","把它留給下一次。"],"dims":["WD","RE"],"dir":0}
+const TEST_VERSION="WC30-V2";
+const TOTAL_QUESTIONS=30;
+const DIMENSIONS=["WA","PR","LA","WD","AC","RS","ST","EX"];
+const questions=[
+{"text":"你走進一間有四扇門的房間，裡面沒有任何人。你會先去哪裡？","options":["有一張舒服的椅子","桌上放著一份未完成的清單","門外傳來聲音","一個看起來可以探索的暗門"],"dims":["WA","LA"],"weights":[[0,3],[2,0],[1,1],[3,0]]},
+{"text":"森林裡有一條路，路中央放著一個沒有主人認領的箱子。你會？","options":["直接離開","先放著，下次再看","打開看看裡面是什麼","先確認有沒有人需要處理"],"dims":["PR","WA"],"weights":[[3,2],[2,1],[0,3],[1,2]]},
+{"text":"你得到一張空白日曆，接下來七天完全沒有安排。你第一個念頭是？","options":["終於可以什麼都不排","先把重要事情填進去","看心情決定","找一些事情讓每天都有內容"],"dims":["LA","WA"],"weights":[[3,0],[1,2],[2,1],[0,3]]},
+{"text":"你準備離開一座城市，房間角落還有一個抽屜沒打開。","options":["直接離開","記住它，下次再看","一定要現在打開","如果不影響行程就算了"],"dims":["PR","ST"],"weights":[[3,2],[2,1],[0,3],[3,0]]},
+{"text":"桌上有一本書，看到一半，你突然有了空閒時間。","options":["繼續讀完","放著，之後再說","換去做更有趣的事","先把今天該做的事情處理掉"],"dims":["WD","LA"],"weights":[[3,0],[1,3],[1,2],[2,1]]},
+{"text":"山路上出現一個告示牌：「前方還有一段路。」你會？","options":["繼續走","先休息","看情況，不急著決定","如果今天沒必要，就回頭"],"dims":["WD","PR"],"weights":[[3,0],[1,2],[2,1],[0,3]]},
+{"text":"你房間裡有一盞燈一直亮著，但不影響任何事情。","options":["立刻關掉","有空再處理","懶得管它","研究為什麼會一直亮"],"dims":["LA","AC"],"weights":[[2,2],[1,1],[3,0],[0,3]]},
+{"text":"你收到一張沒有截止日期的紙條，上面寫著：「有空再處理。」","options":["今天就處理","放到明天","等真的需要時再說","先放進抽屜"],"dims":["PR","WA"],"weights":[[0,3],[2,1],[3,0],[2,0]]},
+{"text":"你在旅途中發現一座還沒蓋完的橋。","options":["想辦法把它完成","覺得有人會處理","看看工程進度","繞過去就好"],"dims":["AC","RS"],"weights":[[3,3],[0,1],[2,2],[1,0]]},
+{"text":"晚上已經很累，你突然想起還有一件小事。","options":["現在做掉","明天再說","如果不影響明天就不做","先記下來"],"dims":["ST","EX"],"weights":[[3,2],[0,1],[0,0],[1,2]]},
+{"text":"你得到一個可以讓時間多出兩小時的能力。","options":["拿來睡覺","拿來做一直想做的事","拿來提前處理事情","留著不用"],"dims":["LA","WA"],"weights":[[3,0],[1,3],[0,3],[2,0]]},
+{"text":"四個人把四件事情放在你面前，但都說不急。","options":["全部先處理","挑最重要的一件","放著等有人提醒","看心情決定"],"dims":["RS","PR"],"weights":[[3,1],[2,0],[1,3],[0,2]]},
+{"text":"你正在休息，突然想到明天有一件事情。","options":["繼續休息","立刻處理","寫下來，明天再做","開始查相關資料"],"dims":["ST","EX"],"weights":[[3,0],[0,3],[2,1],[1,2]]},
+{"text":"你看到一張拼圖，只剩最後幾塊。","options":["一定要完成","先收起來","有興趣再做","等有空再處理"],"dims":["AC","ST"],"weights":[[3,2],[0,0],[2,1],[1,1]]},
+{"text":"朋友約你去一個完全沒有安排的地方。","options":["覺得很好，可以放空","想先知道有沒有事情要做","希望有一點目標","到了再說"],"dims":["LA","WA"],"weights":[[3,0],[1,2],[0,3],[2,1]]},
+{"text":"你發現一份報告少了一個小細節，但沒有人注意。","options":["補完整","覺得沒差","先記下來以後處理","確認它會不會影響結果"],"dims":["AC","RS"],"weights":[[3,3],[0,0],[1,2],[2,3]]},
+{"text":"一個房間裡有四張桌子，其中一張上面堆著未整理的東西。","options":["順手整理","完全不碰","有空再整理","先找自己真正需要的東西"],"dims":["LA","PR"],"weights":[[3,0],[3,1],[2,1],[1,2]]},
+{"text":"你已經完成今天最重要的事情，還有一小段時間。","options":["找下一件事情做","直接離開","整理明天要用的東西","做自己想做的事"],"dims":["WA","ST"],"weights":[[3,1],[0,3],[2,2],[1,3]]},
+{"text":"你看到一個門牌寫著「待處理」，但沒有日期。","options":["今天處理","放著","先確認是不是自己的事","等有人提醒"],"dims":["PR","RS"],"weights":[[0,3],[3,0],[1,2],[2,1]]},
+{"text":"旅程中突然多出半天自由時間。","options":["找事情填滿","什麼都不安排","完成原本沒做完的事","去做自己想做的事"],"dims":["WA","LA"],"weights":[[3,0],[0,3],[2,1],[1,2]]},
+{"text":"你正在做一件很麻煩的事情，做到一半有人告訴你可以明天再做。","options":["那就明天","還是今天做完","先停下來","看剩多少再決定"],"dims":["PR","ST"],"weights":[[3,1],[0,3],[2,0],[1,2]]},
+{"text":"你發現自己的行李裡多了一件不屬於你的東西。","options":["立刻處理掉","先放著","想辦法找到主人","如果不影響旅程就算了"],"dims":["RS","LA"],"weights":[[3,2],[1,1],[0,3],[2,0]]},
+{"text":"你看到一座鐘，距離下一班車還有一小時。","options":["找地方坐著","看看附近有沒有事情可以做","提前去月台","安排這一小時"],"dims":["LA","WA"],"weights":[[3,0],[0,3],[1,2],[2,2]]},
+{"text":"你已經很累，但一件重要的事情還差最後一點。","options":["停下來休息","完成它再休息","交給明天","先判斷最後一點到底有多重要"],"dims":["EX","ST"],"weights":[[0,3],[3,3],[0,0],[2,2]]},
+{"text":"你收到一張邀請卡，上面沒有要求你做任何事情。","options":["很高興，終於沒有任務","開始想自己可以做什麼","放著不管","安排其他事情"],"dims":["LA","WA"],"weights":[[3,0],[0,3],[2,1],[1,2]]},
+{"text":"你發現明天有一件事情可以提前完成，但不提前也完全不會有影響。","options":["現在做掉","明天再做","等最後一天","看當天心情"],"dims":["WA","PR"],"weights":[[3,0],[0,2],[1,3],[2,1]]},
+{"text":"你正在休假，手機跳出一則與工作有關的訊息。","options":["立刻查看","等假期結束","看起來緊急才看","完全不碰"],"dims":["ST","EX"],"weights":[[3,2],[0,0],[2,1],[0,3]]},
+{"text":"一個朋友請你幫忙整理一個很大的東西，但沒有說什麼時候要完成。","options":["馬上開始","先問清楚範圍","等他再次提起","有空再做"],"dims":["RS","PR"],"weights":[[3,1],[2,0],[1,3],[0,2]]},
+{"text":"你完成一件事情後，別人說：「還可以再更好。」","options":["再改到最好","覺得已經夠了","問清楚哪裡真的需要改","先放著"],"dims":["AC","EX"],"weights":[[3,2],[0,0],[2,1],[1,3]]},
+{"text":"你今天什麼事情都沒有必須完成。","options":["覺得很舒服","主動找點事情做","把時間留給自己","整理一些未來可能會用到的東西"],"dims":["WA","LA"],"weights":[[0,3],[3,0],[0,3],[2,1]]}
 ];
 
-let currentQuestion = 0;
-let answers = Array(TOTAL_QUESTIONS).fill(null);
-let orders = Array(TOTAL_QUESTIONS).fill(null);
-let userName = "";
-let userBirthday = "";
+let currentQuestion=0;
+let answers=Array(TOTAL_QUESTIONS).fill(null);
+let orders=Array(TOTAL_QUESTIONS).fill(null);
+let userName="";
+let userBirthday="";
 
-function shuffle(array) {
-  const a = array.slice();
-  for (let i = a.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [a[i], a[j]] = [a[j], a[i]];
-  }
-  return a;
-}
-
-function startTest() {
-  const nameEl = document.getElementById("name");
-  const birthdayEl = document.getElementById("birthday");
-  const errorEl = document.getElementById("startError");
-  userName = nameEl.value.trim();
-  userBirthday = birthdayEl.value;
-  errorEl.textContent = "";
-
-  if (!userName) {
-    errorEl.textContent = "請輸入姓名。";
-    nameEl.focus();
-    return;
-  }
-  if (!userBirthday) {
-    errorEl.textContent = "請選擇生日。";
-    birthdayEl.focus();
-    return;
-  }
-
-  currentQuestion = 0;
-  answers = Array(TOTAL_QUESTIONS).fill(null);
-  orders = Array(TOTAL_QUESTIONS).fill(null);
-  document.getElementById("startPage").classList.add("hidden");
-  document.getElementById("quizPage").classList.remove("hidden");
-  renderQuestion();
-}
-
-function renderQuestion() {
-  const q = questions[currentQuestion];
-  if (!orders[currentQuestion]) orders[currentQuestion] = shuffle([0,1,2,3]);
-
-  document.getElementById("questionNumber").textContent = "QUESTION " + String(currentQuestion + 1).padStart(2, "0");
-  document.getElementById("questionText").textContent = q.text;
-  document.getElementById("progressText").textContent = "第 " + (currentQuestion + 1) + " 題";
-  document.getElementById("progressFill").style.width = (((currentQuestion + 1) / TOTAL_QUESTIONS) * 100) + "%";
-
-  const labels = ["A","B","C","D"];
-  const box = document.getElementById("options");
-  box.innerHTML = "";
-
-  orders[currentQuestion].forEach((originalIndex, displayIndex) => {
-    const btn = document.createElement("button");
-    btn.type = "button";
-    btn.className = "option";
-    if (answers[currentQuestion] === originalIndex) btn.classList.add("selected");
-    const label = document.createElement("span");
-    label.className = "option-label";
-    label.textContent = labels[displayIndex] + ".";
-    btn.appendChild(label);
-    btn.appendChild(document.createTextNode(" " + q.options[originalIndex]));
-    btn.addEventListener("click", () => {
-      answers[currentQuestion] = originalIndex;
-      document.querySelectorAll(".option").forEach(x => x.classList.remove("selected"));
-      btn.classList.add("selected");
-      document.getElementById("quizError").textContent = "";
-    });
-    box.appendChild(btn);
-  });
-
-  document.getElementById("prevBtn").style.visibility = currentQuestion === 0 ? "hidden" : "visible";
-  document.getElementById("nextBtn").textContent = currentQuestion === TOTAL_QUESTIONS - 1 ? "完成測驗" : "下一題";
-}
-
-function nextQuestion() {
-  if (answers[currentQuestion] === null) {
-    document.getElementById("quizError").textContent = "請先選擇一個答案。";
-    return;
-  }
-  if (currentQuestion < TOTAL_QUESTIONS - 1) {
-    currentQuestion++;
-    renderQuestion();
-  } else {
-    finishTest();
-  }
-}
-
-function previousQuestion() {
-  if (currentQuestion > 0) {
-    currentQuestion--;
-    renderQuestion();
-  }
-}
-
-function encodeBase64Unicode(text) {
-  const bytes = new TextEncoder().encode(text);
-  let binary = "";
-  for (const byte of bytes) binary += String.fromCharCode(byte);
-  return btoa(binary).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/g, "");
-}
-
-function finishTest() {
-  const payload = {v: TEST_VERSION, name: userName, birthday: userBirthday, answers: answers};
-  const code = TEST_VERSION + "-" + encodeBase64Unicode(JSON.stringify(payload));
-  document.getElementById("quizPage").classList.add("hidden");
-  document.getElementById("resultPage").classList.remove("hidden");
-  document.getElementById("resultCode").textContent = code;
-}
-
-async function copyResultCode() {
-  const code = document.getElementById("resultCode").textContent;
-  const status = document.getElementById("copyStatus");
-  try {
-    await navigator.clipboard.writeText(code);
-    status.textContent = "已複製結果代碼 ✓";
-  } catch (e) {
-    status.textContent = "瀏覽器不允許自動複製，請選取上方代碼手動複製。";
-  }
-}
-
-document.getElementById("startBtn").addEventListener("click", startTest);
-document.getElementById("nextBtn").addEventListener("click", nextQuestion);
-document.getElementById("prevBtn").addEventListener("click", previousQuestion);
-document.getElementById("copyBtn").addEventListener("click", copyResultCode);
+function shuffle(a){const x=a.slice();for(let i=x.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[x[i],x[j]]=[x[j],x[i]];}return x;}
+function startTest(){const n=document.getElementById("name"),b=document.getElementById("birthday"),e=document.getElementById("startError");userName=n.value.trim();userBirthday=b.value;e.textContent="";if(!userName){e.textContent="請輸入姓名。";n.focus();return;}if(!userBirthday){e.textContent="請選擇生日。";b.focus();return;}currentQuestion=0;answers=Array(TOTAL_QUESTIONS).fill(null);orders=Array(TOTAL_QUESTIONS).fill(null);document.getElementById("startPage").classList.add("hidden");document.getElementById("quizPage").classList.remove("hidden");renderQuestion();}
+function renderQuestion(){const q=questions[currentQuestion];if(!orders[currentQuestion])orders[currentQuestion]=shuffle([0,1,2,3]);document.getElementById("questionNumber").textContent="QUESTION "+String(currentQuestion+1).padStart(2,"0");document.getElementById("questionText").textContent=q.text;document.getElementById("progressText").textContent="第 "+(currentQuestion+1)+" 題";document.getElementById("progressFill").style.width=(((currentQuestion+1)/TOTAL_QUESTIONS)*100)+"%";const box=document.getElementById("options");box.innerHTML="";const labels=["A","B","C","D"];orders[currentQuestion].forEach((oi,di)=>{const btn=document.createElement("button");btn.type="button";btn.className="option";if(answers[currentQuestion]===oi)btn.classList.add("selected");const lab=document.createElement("span");lab.className="option-label";lab.textContent=labels[di]+".";btn.appendChild(lab);btn.appendChild(document.createTextNode(" "+q.options[oi]));btn.addEventListener("click",()=>{answers[currentQuestion]=oi;document.querySelectorAll(".option").forEach(x=>x.classList.remove("selected"));btn.classList.add("selected");document.getElementById("quizError").textContent="";});box.appendChild(btn);});document.getElementById("prevBtn").style.visibility=currentQuestion===0?"hidden":"visible";document.getElementById("nextBtn").textContent=currentQuestion===TOTAL_QUESTIONS-1?"完成測驗":"下一題";}
+function nextQuestion(){if(answers[currentQuestion]===null){document.getElementById("quizError").textContent="請先選擇一個答案。";return;}if(currentQuestion<TOTAL_QUESTIONS-1){currentQuestion++;renderQuestion();}else finishTest();}
+function previousQuestion(){if(currentQuestion>0){currentQuestion--;renderQuestion();}}
+function calculateScores(){const raw=Object.fromEntries(DIMENSIONS.map(d=>[d,0]));const max=Object.fromEntries(DIMENSIONS.map(d=>[d,0]));questions.forEach(q=>q.dims.forEach(d=>{max[d]+=3;}));questions.forEach((q,i)=>{const oi=answers[i];if(oi!==null)q.dims.forEach((d,di)=>raw[d]+=q.weights[oi][di]);});const score=Object.fromEntries(DIMENSIONS.map(d=>[d,Math.round(raw[d]/max[d]*100)]));return {raw,max,score};}
+function encodeBase64Unicode(text){const bytes=new TextEncoder().encode(text);let binary="";for(const byte of bytes)binary+=String.fromCharCode(byte);return btoa(binary).replace(/\+/g,"-").replace(/\//g,"_").replace(/=+$/g,"");}
+function finishTest(){const result=calculateScores();const payload={v:TEST_VERSION,name:userName,birthday:userBirthday,answers:answers,scores:result.score};const code=TEST_VERSION+"-"+encodeBase64Unicode(JSON.stringify(payload));document.getElementById("quizPage").classList.add("hidden");document.getElementById("resultPage").classList.remove("hidden");document.getElementById("resultCode").textContent=code;}
+async function copyResultCode(){const code=document.getElementById("resultCode").textContent;const status=document.getElementById("copyStatus");try{await navigator.clipboard.writeText(code);status.textContent="已複製結果代碼 ✓";}catch(e){status.textContent="瀏覽器不允許自動複製，請選取上方代碼手動複製。";}}
+document.getElementById("startBtn").addEventListener("click",startTest);document.getElementById("nextBtn").addEventListener("click",nextQuestion);document.getElementById("prevBtn").addEventListener("click",previousQuestion);document.getElementById("copyBtn").addEventListener("click",copyResultCode);
 </script>
 </body>
 </html>
