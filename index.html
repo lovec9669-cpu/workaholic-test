@@ -3,1307 +3,245 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>你真的只是喜歡忙嗎？｜抽象心理測驗</title>
-
+<title>你真的只是喜歡忙嗎？｜WC30-V1</title>
 <style>
-    * {
-        box-sizing: border-box;
-    }
-
-    body {
-        margin: 0;
-        min-height: 100vh;
-        font-family:
-            "Noto Sans TC",
-            "Microsoft JhengHei",
-            Arial,
-            sans-serif;
-        background:
-            radial-gradient(circle at top left, #eef2ff 0%, transparent 35%),
-            radial-gradient(circle at bottom right, #fce7f3 0%, transparent 35%),
-            #f8fafc;
-        color: #1e293b;
-    }
-
-    .container {
-        width: min(760px, 92%);
-        margin: 0 auto;
-        padding: 50px 0;
-    }
-
-    .card {
-        background: rgba(255,255,255,0.94);
-        border-radius: 24px;
-        padding: 38px;
-        box-shadow: 0 15px 45px rgba(15,23,42,0.08);
-        backdrop-filter: blur(10px);
-    }
-
-    h1 {
-        margin-top: 0;
-        font-size: 32px;
-        line-height: 1.35;
-        text-align: center;
-    }
-
-    h2 {
-        line-height: 1.5;
-    }
-
-    .subtitle {
-        text-align: center;
-        color: #64748b;
-        line-height: 1.8;
-        margin-bottom: 35px;
-    }
-
-    .hidden {
-        display: none !important;
-    }
-
-    label {
-        display: block;
-        margin-bottom: 8px;
-        font-weight: 700;
-    }
-
-    input {
-        width: 100%;
-        padding: 14px 16px;
-        border: 1px solid #cbd5e1;
-        border-radius: 12px;
-        font-size: 16px;
-        margin-bottom: 20px;
-        outline: none;
-    }
-
-    input:focus {
-        border-color: #6366f1;
-        box-shadow: 0 0 0 3px rgba(99,102,241,0.12);
-    }
-
-    button {
-        width: 100%;
-        border: none;
-        border-radius: 14px;
-        padding: 15px 20px;
-        font-size: 17px;
-        font-weight: 700;
-        cursor: pointer;
-        transition: 0.2s;
-    }
-
-    .primary {
-        background: #4f46e5;
-        color: white;
-    }
-
-    .primary:hover {
-        background: #4338ca;
-        transform: translateY(-1px);
-    }
-
-    .progress-area {
-        margin-bottom: 30px;
-    }
-
-    .progress-text {
-        display: flex;
-        justify-content: space-between;
-        color: #64748b;
-        font-size: 14px;
-        margin-bottom: 8px;
-    }
-
-    .progress-bar {
-        height: 8px;
-        background: #e2e8f0;
-        border-radius: 999px;
-        overflow: hidden;
-    }
-
-    .progress-fill {
-        height: 100%;
-        background: #6366f1;
-        transition: width 0.3s ease;
-    }
-
-    .question-number {
-        color: #6366f1;
-        font-size: 14px;
-        font-weight: 700;
-        margin-bottom: 10px;
-    }
-
-    .question {
-        font-size: 23px;
-        line-height: 1.7;
-        margin-bottom: 28px;
-        font-weight: 700;
-    }
-
-    .options {
-        display: grid;
-        gap: 14px;
-    }
-
-    .option {
-        width: 100%;
-        padding: 18px;
-        text-align: left;
-        border: 1px solid #cbd5e1;
-        background: white;
-        color: #334155;
-        border-radius: 15px;
-        cursor: pointer;
-        transition: 0.2s;
-        font-weight: 500;
-        line-height: 1.7;
-    }
-
-    .option:hover {
-        border-color: #818cf8;
-        background: #f8faff;
-        transform: translateY(-1px);
-    }
-
-    .option.selected {
-        border-color: #4f46e5;
-        background: #eef2ff;
-    }
-
-    .option-label {
-        font-weight: 800;
-        color: #4f46e5;
-        margin-right: 8px;
-    }
-
-    .navigation {
-        display: flex;
-        gap: 12px;
-        margin-top: 25px;
-    }
-
-    .navigation button {
-        flex: 1;
-    }
-
-    .secondary {
-        background: #e2e8f0;
-        color: #334155;
-    }
-
-    .secondary:hover {
-        background: #cbd5e1;
-    }
-
-    .result-box {
-        text-align: center;
-    }
-
-    .code-box {
-        margin-top: 25px;
-        background: #0f172a;
-        color: #e2e8f0;
-        border-radius: 15px;
-        padding: 18px;
-        text-align: left;
-        word-break: break-all;
-        line-height: 1.6;
-        font-family: monospace;
-        font-size: 13px;
-    }
-
-    .copy-btn {
-        margin-top: 12px;
-        background: #334155;
-        color: white;
-    }
-
-    .notice {
-        margin-top: 20px;
-        padding: 15px;
-        background: #f1f5f9;
-        border-radius: 12px;
-        color: #475569;
-        line-height: 1.7;
-        font-size: 14px;
-    }
-
-    .error {
-        color: #dc2626;
-        margin-bottom: 15px;
-        font-size: 14px;
-    }
-
-    @media (max-width: 600px) {
-        .container {
-            padding: 20px 0;
-        }
-
-        .card {
-            padding: 24px 18px;
-            border-radius: 18px;
-        }
-
-        h1 {
-            font-size: 26px;
-        }
-
-        .question {
-            font-size: 20px;
-        }
-    }
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;font-family:"Noto Sans TC","Microsoft JhengHei",Arial,sans-serif;background:linear-gradient(135deg,#f5f7ff,#fff7fb);color:#1e293b}
+.container{width:min(760px,92%);margin:auto;padding:32px 0 50px}
+.card{background:#fff;border-radius:24px;padding:34px;box-shadow:0 12px 40px rgba(15,23,42,.08)}
+.hidden{display:none!important}
+h1{margin:0 0 16px;text-align:center;font-size:30px;line-height:1.4}
+.subtitle{text-align:center;color:#64748b;line-height:1.8;margin-bottom:30px}
+label{display:block;font-weight:700;margin:0 0 8px}
+input{width:100%;padding:14px;border:1px solid #cbd5e1;border-radius:12px;font-size:16px;margin-bottom:18px}
+button{border:0;border-radius:13px;padding:14px 18px;font-size:16px;font-weight:700;cursor:pointer}
+.primary{background:#4f46e5;color:#fff;width:100%}
+.primary:hover{background:#4338ca}
+.secondary{background:#e2e8f0;color:#334155}
+.error{color:#dc2626;min-height:22px;margin:8px 0;font-size:14px}
+.progress{margin-bottom:28px}
+.progress-row{display:flex;justify-content:space-between;color:#64748b;font-size:14px;margin-bottom:8px}
+.track{height:8px;background:#e2e8f0;border-radius:99px;overflow:hidden}
+.fill{height:100%;background:#6366f1;transition:width .25s}
+.qno{color:#6366f1;font-weight:800;font-size:14px;margin-bottom:8px}
+.question{font-size:22px;font-weight:700;line-height:1.65;margin-bottom:24px}
+.options{display:grid;gap:12px}
+.option{width:100%;text-align:left;background:#fff;border:1px solid #cbd5e1;color:#334155;line-height:1.65}
+.option:hover{border-color:#818cf8;background:#f8faff}
+.option.selected{border-color:#4f46e5;background:#eef2ff}
+.option-label{color:#4f46e5;font-weight:900;margin-right:8px}
+.nav{display:flex;gap:12px;margin-top:22px}
+.nav button{flex:1}
+.code{margin-top:20px;background:#0f172a;color:#e2e8f0;padding:18px;border-radius:14px;word-break:break-all;font:13px/1.6 monospace}
+.note{margin-top:18px;padding:14px;background:#f1f5f9;border-radius:12px;color:#475569;line-height:1.7;font-size:14px}
+@media(max-width:600px){.container{padding:16px 0}.card{padding:22px 17px;border-radius:18px}h1{font-size:25px}.question{font-size:19px}}
 </style>
 </head>
-
 <body>
-
 <div class="container">
+<section id="startPage" class="card">
+<h1>你真的只是喜歡忙嗎？</h1>
+<div class="subtitle">一場不知道自己正在被測什麼的抽象心理測驗。<br>請依照第一直覺回答。</div>
+<label for="name">姓名</label>
+<input id="name" type="text" maxlength="30" autocomplete="name" placeholder="請輸入姓名">
+<label for="birthday">生日</label>
+<input id="birthday" type="date" autocomplete="bday">
+<div id="startError" class="error"></div>
+<button id="startBtn" class="primary" type="button">開始測驗</button>
+<div class="note">共 30 題。沒有正確答案，請選最符合第一直覺的選項。</div>
+</section>
 
-    <!-- =========================
-         首頁
-    ========================== -->
-    <section id="startPage" class="card">
+<section id="quizPage" class="card hidden">
+<div class="progress">
+<div class="progress-row"><span id="progressText">第 1 題</span><span>30 題</span></div>
+<div class="track"><div id="progressFill" class="fill" style="width:3.33%"></div></div>
+</div>
+<div id="questionNumber" class="qno"></div>
+<div id="questionText" class="question"></div>
+<div id="options" class="options"></div>
+<div id="quizError" class="error"></div>
+<div class="nav">
+<button id="prevBtn" class="secondary" type="button">上一題</button>
+<button id="nextBtn" class="primary" type="button">下一題</button>
+</div>
+</section>
 
-        <h1>你真的只是喜歡忙嗎？</h1>
-
-        <div class="subtitle">
-            一場不知道自己正在被測什麼的抽象心理測驗。<br>
-            請依照第一直覺回答，不需要思考哪個答案比較「好」。
-        </div>
-
-        <label for="name">姓名</label>
-        <input
-            id="name"
-            type="text"
-            maxlength="30"
-            placeholder="請輸入姓名"
-        >
-
-        <label for="birthday">生日</label>
-        <input
-            id="birthday"
-            type="date"
-        >
-
-        <div id="startError" class="error"></div>
-
-        <button class="primary" onclick="startTest()">
-            開始測驗
-        </button>
-
-        <div class="notice">
-            本測驗共 30 題。每題沒有正確答案，請依照直覺選擇。
-        </div>
-
-    </section>
-
-
-    <!-- =========================
-         測驗頁
-    ========================== -->
-    <section id="quizPage" class="card hidden">
-
-        <div class="progress-area">
-
-            <div class="progress-text">
-                <span id="progressText">第 1 題</span>
-                <span>30 題</span>
-            </div>
-
-            <div class="progress-bar">
-                <div
-                    id="progressFill"
-                    class="progress-fill"
-                    style="width: 3.33%;"
-                ></div>
-            </div>
-
-        </div>
-
-        <div id="questionNumber" class="question-number"></div>
-
-        <div id="questionText" class="question"></div>
-
-        <div id="options" class="options"></div>
-
-        <div id="quizError" class="error"></div>
-
-        <div class="navigation">
-
-            <button
-                id="prevBtn"
-                class="secondary"
-                onclick="previousQuestion()"
-            >
-                上一題
-            </button>
-
-            <button
-                id="nextBtn"
-                class="primary"
-                onclick="nextQuestion()"
-            >
-                下一題
-            </button>
-
-        </div>
-
-    </section>
-
-
-    <!-- =========================
-         結果頁
-    ========================== -->
-    <section id="resultPage" class="card hidden">
-
-        <div class="result-box">
-
-            <h1>測驗完成</h1>
-
-            <p>
-                謝謝你的回答。
-            </p>
-
-            <p>
-                你的測驗結果已經整理成專屬代碼。
-            </p>
-
-            <div class="code-box" id="resultCode"></div>
-
-            <button
-                class="copy-btn"
-                onclick="copyResultCode()"
-            >
-                複製結果代碼
-            </button>
-
-            <div class="notice">
-                請將這串代碼完整提供給測驗分析者。<br>
-                網站不會直接顯示你的心理測驗結果。
-            </div>
-
-        </div>
-
-    </section>
-
+<section id="resultPage" class="card hidden">
+<h1>測驗完成</h1>
+<p style="text-align:center;line-height:1.8">請複製以下結果代碼，交給測驗分析者。</p>
+<div id="resultCode" class="code"></div>
+<button id="copyBtn" class="primary" type="button" style="margin-top:12px">複製結果代碼</button>
+<div id="copyStatus" class="note">網站不會直接顯示心理測驗結果。分析者可依 WC30-V1 的固定規則解碼並分析 8 個維度。</div>
+</section>
 </div>
 
-
 <script>
-
-/* =========================================================
-   測驗設定
-========================================================= */
+"use strict";
 
 const TEST_VERSION = "WC30-V1";
 const TOTAL_QUESTIONS = 30;
 
-
-/* =========================================================
-   30 題題庫
-
-   注意：
-   這裡刻意不使用「工作、加班、升職」等直接字眼。
-   ========================================================= */
-
 const questions = [
-
-{
-    text: "你走進一棟陌生的大樓，電梯停在四個樓層。你會去哪裡？",
-    options: [
-        "一樓：窗外有陽光，門口放著一張長椅。",
-        "七樓：走廊很安靜，盡頭有一盞還亮著的燈。",
-        "十二樓：房間裡堆滿尚未整理的物品。",
-        "頂樓：什麼都沒有，只有一張桌子與一支筆。"
-    ]
-},
-
-{
-    text: "森林裡出現四條路，你只能選一條。",
-    options: [
-        "有很多腳印，但看不到盡頭。",
-        "路上長滿柔軟的草，幾乎沒有人走過。",
-        "路旁立著一塊寫著「尚未完成」的木牌。",
-        "通往山頂，途中沒有任何休息的地方。"
-    ]
-},
-
-{
-    text: "桌上有四個盒子，你最想打開哪一個？",
-    options: [
-        "裝著一張空白紙的盒子。",
-        "裝著一把鑰匙的盒子。",
-        "裝著一張未完成地圖的盒子。",
-        "裝著一顆會發光的小石頭的盒子。"
-    ]
-},
-
-{
-    text: "你在海邊發現一艘小船，船上只有一樣東西。",
-    options: [
-        "一張航海圖。",
-        "一張毯子。",
-        "一盞沒有熄滅的燈。",
-        "一個裝滿工具的箱子。"
-    ]
-},
-
-{
-    text: "鐘面上的時間突然停止了。你第一個注意到什麼？",
-    options: [
-        "停止在哪一個數字。",
-        "周圍的人有沒有發現。",
-        "自己突然多出了多少時間。",
-        "鐘為什麼會停止。"
-    ]
-},
-
-{
-    text: "你進入一間房間，裡面只有四樣東西。",
-    options: [
-        "一張床。",
-        "一面鏡子。",
-        "一張桌子。",
-        "一扇沒有把手的門。"
-    ]
-},
-
-{
-    text: "一場雨即將開始，你只能帶走一樣東西。",
-    options: [
-        "雨傘。",
-        "地圖。",
-        "手錶。",
-        "一本還沒寫完的書。"
-    ]
-},
-
-{
-    text: "山頂有四個位置可以坐下。",
-    options: [
-        "能看到整座城市的位置。",
-        "背風而且很舒服的位置。",
-        "靠近一張告示牌的位置。",
-        "離山頂最後一段路最近的位置。"
-    ]
-},
-
-{
-    text: "你發現一扇門，門上沒有任何標誌。",
-    options: [
-        "直接推開。",
-        "先觀察周圍。",
-        "尋找鑰匙。",
-        "先記住門的位置，之後再回來。"
-    ]
-},
-
-{
-    text: "一條河流中央有四座橋。",
-    options: [
-        "最短但最窄的橋。",
-        "最長但最穩的橋。",
-        "看起來幾乎沒人走的橋。",
-        "橋上放著一塊寫著「請完成它」的牌子。"
-    ]
-},
-
-{
-    text: "你撿到一本筆記本，最後一頁寫著一句話：「還差一點。」你會？",
-    options: [
-        "繼續寫下去。",
-        "把筆記本收起來。",
-        "想知道前面寫了什麼。",
-        "把最後一句話擦掉。"
-    ]
-},
-
-{
-    text: "你看到天空出現四種顏色。",
-    options: [
-        "深藍。",
-        "金色。",
-        "灰白。",
-        "橘紅。"
-    ]
-},
-
-{
-    text: "你得到一張只能使用一次的車票。",
-    options: [
-        "去一個從沒去過的地方。",
-        "回到熟悉的地方。",
-        "去一個據說永遠不會結束的地方。",
-        "去一個沒有人知道你會出現的地方。"
-    ]
-},
-
-{
-    text: "一座城市突然停電，你第一個想做什麼？",
-    options: [
-        "找出停電原因。",
-        "找一個安全舒服的地方等待。",
-        "確認重要的事情是否受到影響。",
-        "看看黑暗中的城市。"
-    ]
-},
-
-{
-    text: "房間裡有一扇窗戶，窗外看得到四種景象。",
-    options: [
-        "正在施工的建築。",
-        "安靜的森林。",
-        "繁忙的街道。",
-        "沒有任何東西的天空。"
-    ]
-},
-
-{
-    text: "你得到一個可以讓時間多出一小時的能力。你會把這一小時放在哪裡？",
-    options: [
-        "清理還沒完成的事情。",
-        "睡覺。",
-        "做一件一直想做的事情。",
-        "提前處理明天的事情。"
-    ]
-},
-
-{
-    text: "你在沙漠中看到一座小屋。",
-    options: [
-        "門開著。",
-        "門鎖著。",
-        "屋頂有煙。",
-        "屋外有一張桌子，上面放著工具。"
-    ]
-},
-
-{
-    text: "四個人同時把東西交給你，說：「這個很重要。」你會先做什麼？",
-    options: [
-        "全部接下來。",
-        "問清楚哪一件最急。",
-        "先放著，等有空再處理。",
-        "選一件自己最有把握的。"
-    ]
-},
-
-{
-    text: "你看到一座還沒蓋完的房子。",
-    options: [
-        "想知道最後會長什麼樣子。",
-        "想進去看看。",
-        "想幫忙把它蓋完。",
-        "覺得未完成也沒有關係。"
-    ]
-},
-
-{
-    text: "你的桌面上有一張紙，上面只有四個字：「明天再處理。」你的第一反應是？",
-    options: [
-        "今天先處理掉。",
-        "真的明天再說。",
-        "先確認明天有沒有時間。",
-        "把它放到最容易看到的位置。"
-    ]
-},
-
-{
-    text: "你走在一條長廊，牆上每隔十公尺就有一扇門。",
-    options: [
-        "每扇門都想看看。",
-        "選一扇最特別的。",
-        "一直走到盡頭。",
-        "找一個可以坐下來的地方。"
-    ]
-},
-
-{
-    text: "你收到一封沒有寄件人的信。",
-    options: [
-        "立刻打開。",
-        "先研究信封。",
-        "先放著。",
-        "等到有完整時間時再看。"
-    ]
-},
-
-{
-    text: "你站在一個十字路口，四個方向都沒有路標。",
-    options: [
-        "選看起來最快的路。",
-        "選最安全的路。",
-        "選最少人走的路。",
-        "先停下來觀察。"
-    ]
-},
-
-{
-    text: "一座花園裡有一棵樹沒有結果。",
-    options: [
-        "想辦法讓它結果。",
-        "覺得沒有結果也沒關係。",
-        "研究它為什麼不結果。",
-        "等待下一個季節。"
-    ]
-},
-
-{
-    text: "你找到一個抽屜，裡面有一張清單，但上面少了一項。",
-    options: [
-        "想辦法找出缺少的那一項。",
-        "重新整理整張清單。",
-        "直接忽略。",
-        "先把其他項目完成。"
-    ]
-},
-
-{
-    text: "夜裡你看到遠方有一盞燈一直亮著。",
-    options: [
-        "走過去看看。",
-        "記住它的位置。",
-        "覺得有人處理就好。",
-        "想知道為什麼一直亮著。"
-    ]
-},
-
-{
-    text: "你面前有一個拼圖，只剩最後三塊。",
-    options: [
-        "立刻完成。",
-        "先休息一下。",
-        "研究三塊的位置。",
-        "把拼圖收起來。"
-    ]
-},
-
-{
-    text: "你獲得一張空白日曆。",
-    options: [
-        "先安排重要事情。",
-        "什麼都不寫。",
-        "安排自己想做的事情。",
-        "先把每天都填滿。"
-    ]
-},
-
-{
-    text: "你發現自己的房間有一個角落一直沒有整理。",
-    options: [
-        "今天整理掉。",
-        "等真正有空再整理。",
-        "先整理最重要的部分。",
-        "覺得它存在也沒什麼。"
-    ]
-},
-
-{
-    text: "旅程最後一天，你發現還有一件事情沒完成。",
-    options: [
-        "無論如何完成它。",
-        "評估是否值得完成。",
-        "放棄，享受最後一天。",
-        "把它留給下一次。"
-    }
+{"text":"你走進一棟陌生的大樓，電梯停在四個樓層。你會去哪裡？","options":["一樓：窗外有陽光，門口放著一張長椅。","七樓：走廊很安靜，盡頭有一盞還亮著的燈。","十二樓：房間裡堆滿尚未整理的物品。","頂樓：什麼都沒有，只有一張桌子與一支筆。"],"dims":["WD","RE"],"dir":0},
+{"text":"森林裡出現四條路，你只能選一條。","options":["有很多腳印，但看不到盡頭。","路上長滿柔軟的草，幾乎沒有人走過。","路旁立著一塊寫著「尚未完成」的木牌。","通往山頂，途中沒有任何休息的地方。"],"dims":["AC","TA"],"dir":1},
+{"text":"桌上有四個盒子，你最想打開哪一個？","options":["裝著一張空白紙的盒子。","裝著一把鑰匙的盒子。","裝著一張未完成地圖的盒子。","裝著一顆會發光的小石頭的盒子。"],"dims":["CT","SE"],"dir":2},
+{"text":"你在海邊發現一艘小船，船上只有一樣東西。","options":["一張航海圖。","一張毯子。","一盞沒有熄滅的燈。","一個裝滿工具的箱子。"],"dims":["WD","AC"],"dir":3},
+{"text":"鐘面上的時間突然停止了。你第一個注意到什麼？","options":["停止在哪一個數字。","周圍的人有沒有發現。","自己突然多出了多少時間。","鐘為什麼會停止。"],"dims":["TA","RE"],"dir":1},
+{"text":"你進入一間房間，裡面只有四樣東西。","options":["一張床。","一面鏡子。","一張桌子。","一扇沒有把手的門。"],"dims":["RS","CT"],"dir":3},
+{"text":"一場雨即將開始，你只能帶走一樣東西。","options":["雨傘。","地圖。","手錶。","一本還沒寫完的書。"],"dims":["WD","SE"],"dir":0},
+{"text":"山頂有四個位置可以坐下。","options":["能看到整座城市的位置。","背風而且很舒服的位置。","靠近一張告示牌的位置。","離山頂最後一段路最近的位置。"],"dims":["AC","RE"],"dir":2},
+{"text":"你發現一扇門，門上沒有任何標誌。","options":["直接推開。","先觀察周圍。","尋找鑰匙。","先記住門的位置，之後再回來。"],"dims":["CT","TA"],"dir":3},
+{"text":"一條河流中央有四座橋。","options":["最短但最窄的橋。","最長但最穩的橋。","看起來幾乎沒人走的橋。","橋上放著一塊寫著「請完成它」的牌子。"],"dims":["RS","WD"],"dir":1},
+{"text":"你撿到一本筆記本，最後一頁寫著一句話：「還差一點。」你會？","options":["繼續寫下去。","把筆記本收起來。","想知道前面寫了什麼。","把最後一句話擦掉。"],"dims":["AC","TA"],"dir":2},
+{"text":"你看到天空出現四種顏色。","options":["深藍。","金色。","灰白。","橘紅。"],"dims":["RE","SE"],"dir":0},
+{"text":"你得到一張只能使用一次的車票。","options":["去一個從沒去過的地方。","回到熟悉的地方。","去一個據說永遠不會結束的地方。","去一個沒有人知道你會出現的地方。"],"dims":["WD","CT"],"dir":3},
+{"text":"一座城市突然停電，你第一個想做什麼？","options":["找出停電原因。","找一個安全舒服的地方等待。","確認重要的事情是否受到影響。","看看黑暗中的城市。"],"dims":["RS","TA"],"dir":1},
+{"text":"你看到一座房子，窗外看得到四種景象。","options":["正在施工的建築。","安靜的森林。","繁忙的街道。","沒有任何東西的天空。"],"dims":["AC","SE"],"dir":2},
+{"text":"你得到一個可以讓時間多出一小時的能力。你會把這一小時放在哪裡？","options":["清理還沒完成的事情。","睡覺。","做一件一直想做的事情。","提前處理明天的事情。"],"dims":["WD","RE"],"dir":0},
+{"text":"你在沙漠中看到一座小屋。","options":["門開著。","門鎖著。","屋頂有煙。","屋外有一張桌子，上面放著工具。"],"dims":["RS","CT"],"dir":3},
+{"text":"四個人同時把東西交給你，說：「這個很重要。」你會先做什麼？","options":["全部接下來。","問清楚哪一件最急。","先放著，等有空再處理。","選一件自己最有把握的。"],"dims":["TA","SE"],"dir":2},
+{"text":"你看到一座還沒蓋完的房子。","options":["想知道最後會長什麼樣子。","想進去看看。","想幫忙把它蓋完。","覺得未完成也沒有關係。"],"dims":["AC","WD"],"dir":1},
+{"text":"你的桌面上有一張紙，上面只有四個字：「明天再處理。」你的第一反應是？","options":["今天先處理掉。","真的明天再說。","先確認明天有沒有時間。","把它放到最容易看到的位置。"],"dims":["RE","RS"],"dir":3},
+{"text":"你走在一條長廊，牆上每隔十公尺就有一扇門。","options":["每扇門都想看看。","選一扇最特別的。","一直走到盡頭。","找一個可以坐下來的地方。"],"dims":["CT","TA"],"dir":0},
+{"text":"你收到一封沒有寄件人的信。","options":["立刻打開。","先研究信封。","先放著。","等到有完整時間時再看。"],"dims":["WD","SE"],"dir":2},
+{"text":"你站在一個十字路口，四個方向都沒有路標。","options":["選看起來最快的路。","選最安全的路。","選最少人走的路。","先停下來觀察。"],"dims":["AC","RE"],"dir":1},
+{"text":"一座花園裡有一棵樹沒有結果。","options":["想辦法讓它結果。","覺得沒有結果也沒關係。","研究它為什麼不結果。","等待下一個季節。"],"dims":["RS","WD"],"dir":3},
+{"text":"你找到一個抽屜，裡面有一張清單，但上面少了一項。","options":["想辦法找出缺少的那一項。","重新整理整張清單。","直接忽略。","先把其他項目完成。"],"dims":["TA","CT"],"dir":2},
+{"text":"夜裡你看到遠方有一盞燈一直亮著。","options":["走過去看看。","記住它的位置。","覺得有人處理就好。","想知道為什麼一直亮著。"],"dims":["SE","RE"],"dir":0},
+{"text":"你面前有一個拼圖，只剩最後三塊。","options":["立刻完成。","先休息一下。","研究三塊的位置。","把拼圖收起來。"],"dims":["WD","AC"],"dir":1},
+{"text":"你獲得一張空白日曆。","options":["先安排重要事情。","什麼都不寫。","安排自己想做的事情。","先把每天都填滿。"],"dims":["RS","TA"],"dir":3},
+{"text":"你發現自己的房間有一個角落一直沒有整理。","options":["今天整理掉。","等真正有空再整理。","先整理最重要的部分。","覺得它存在也沒什麼。"],"dims":["CT","SE"],"dir":2},
+{"text":"旅程最後一天，你發現還有一件事情沒完成。","options":["無論如何完成它。","評估是否值得完成。","放棄，享受最後一天。","把它留給下一次。"],"dims":["WD","RE"],"dir":0}
 ];
-
-
-/* =========================================================
-   答案資料
-
-   每個選項實際對應到不同心理維度。
-   這裡刻意讓高分位置打亂。
-
-   維度：
-   drive       工作驅動
-   achievement 成就需求
-   responsibility 責任感
-   anxiety     時間焦慮
-   control     控制／完美傾向
-   rest        休息能力
-   security    安全感需求
-   exhaustion  耗竭傾向
-
-   每題四個選項的分數位置刻意打亂。
-========================================================= */
-
-const scoring = [
-
-    [
-        {drive:0, achievement:0, responsibility:0, anxiety:0, control:0, rest:3, security:1, exhaustion:0},
-        {drive:3, achievement:2, responsibility:1, anxiety:2, control:1, rest:0, security:0, exhaustion:1},
-        {drive:2, achievement:1, responsibility:3, anxiety:2, control:2, rest:0, security:1, exhaustion:1},
-        {drive:3, achievement:3, responsibility:1, anxiety:1, control:3, rest:0, security:0, exhaustion:2}
-    ],
-
-    [
-        {drive:3, achievement:2, responsibility:2, anxiety:2, control:1, rest:0, security:1, exhaustion:1},
-        {drive:0, achievement:0, responsibility:0, anxiety:0, control:0, rest:3, security:2, exhaustion:0},
-        {drive:2, achievement:2, responsibility:3, anxiety:2, control:3, rest:0, security:1, exhaustion:2},
-        {drive:3, achievement:3, responsibility:1, anxiety:3, control:2, rest:0, security:0, exhaustion:2}
-    ],
-
-    [
-        {drive:0, achievement:0, responsibility:0, anxiety:0, control:1, rest:3, security:2, exhaustion:0},
-        {drive:3, achievement:2, responsibility:2, anxiety:2, control:2, rest:0, security:1, exhaustion:1},
-        {drive:3, achievement:3, responsibility:2, anxiety:3, control:3, rest:0, security:0, exhaustion:2},
-        {drive:2, achievement:2, responsibility:3, anxiety:2, control:3, rest:1, security:1, exhaustion:1}
-    ],
-
-    [
-        {drive:3, achievement:2, responsibility:1, anxiety:2, control:2, rest:0, security:0, exhaustion:1},
-        {drive:0, achievement:0, responsibility:0, anxiety:0, control:0, rest:3, security:2, exhaustion:0},
-        {drive:3, achievement:2, responsibility:3, anxiety:2, control:1, rest:0, security:2, exhaustion:1},
-        {drive:2, achievement:3, responsibility:2, anxiety:3, control:2, rest:0, security:1, exhaustion:2}
-    ],
-
-    [
-        {drive:2, achievement:1, responsibility:1, anxiety:3, control:2, rest:0, security:1, exhaustion:1},
-        {drive:1, achievement:0, responsibility:0, anxiety:0, control:0, rest:3, security:2, exhaustion:0},
-        {drive:2, achievement:1, responsibility:3, anxiety:2, control:3, rest:0, security:1, exhaustion:1},
-        {drive:3, achievement:3, responsibility:2, anxiety:3, control:2, rest:0, security:0, exhaustion:2}
-    ],
-
-    [
-        {drive:0, achievement:0, responsibility:0, anxiety:0, control:0, rest:3, security:2, exhaustion:0},
-        {drive:2, achievement:1, responsibility:2, anxiety:2, control:3, rest:0, security:1, exhaustion:1},
-        {drive:3, achievement:3, responsibility:3, anxiety:3, control:3, rest:0, security:0, exhaustion:2},
-        {drive:3, achievement:2, responsibility:2, anxiety:2, control:2, rest:0, security:1, exhaustion:2}
-    ],
-
-    [
-        {drive:1, achievement:0, responsibility:0, anxiety:0, control:0, rest:3, security:2, exhaustion:0},
-        {drive:3, achievement:2, responsibility:2, anxiety:2, control:2, rest:0, security:1, exhaustion:1},
-        {drive:3, achievement:3, responsibility:2, anxiety:3, control:3, rest:0, security:0, exhaustion:2},
-        {drive:2, achievement:2, responsibility:3, anxiety:2, control:3, rest:0, security:1, exhaustion:1}
-    ],
-
-    [
-        {drive:3, achievement:3, responsibility:2, anxiety:2, control:2, rest:0, security:0, exhaustion:1},
-        {drive:0, achievement:0, responsibility:0, anxiety:0, control:0, rest:3, security:2, exhaustion:0},
-        {drive:2, achievement:2, responsibility:3, anxiety:2, control:3, rest:0, security:1, exhaustion:1},
-        {drive:3, achievement:2, responsibility:2, anxiety:3, control:3, rest:0, security:1, exhaustion:2}
-    ],
-
-    [
-        {drive:3, achievement:2, responsibility:2, anxiety:3, control:2, rest:0, security:0, exhaustion:2},
-        {drive:1, achievement:0, responsibility:0, anxiety:0, control:0, rest:3, security:2, exhaustion:0},
-        {drive:2, achievement:2, responsibility:3, anxiety:2, control:3, rest:0, security:1, exhaustion:1},
-        {drive:3, achievement:3, responsibility:2, anxiety:2, control:3, rest:0, security:1, exhaustion:2}
-    ],
-
-    [
-        {drive:3, achievement:3, responsibility:2, anxiety:3, control:3, rest:0, security:0, exhaustion:2},
-        {drive:0, achievement:0, responsibility:0, anxiety:0, control:0, rest:3, security:2, exhaustion:0},
-        {drive:2, achievement:1, responsibility:3, anxiety:2, control:2, rest:0, security:1, exhaustion:1},
-        {drive:3, achievement:2, responsibility:2, anxiety:2, control:3, rest:0, security:1, exhaustion:1}
-    ],
-
-    [
-        {drive:3, achievement:2, responsibility:2, anxiety:2, control:2, rest:0, security:1, exhaustion:1},
-        {drive:0, achievement:0, responsibility:0, anxiety:0, control:0, rest:3, security:2, exhaustion:0},
-        {drive:2, achievement:3, responsibility:3, anxiety:3, control:2, rest:0, security:0, exhaustion:2},
-        {drive:3, achievement:2, responsibility:2, anxiety:3, control:3, rest:0, security:1, exhaustion:2}
-    ],
-
-    [
-        {drive:2, achievement:2, responsibility:2, anxiety:2, control:1, rest:0, security:1, exhaustion:1},
-        {drive:0, achievement:0, responsibility:0, anxiety:0, control:0, rest:3, security:2, exhaustion:0},
-        {drive:3, achievement:3, responsibility:2, anxiety:3, control:3, rest:0, security:0, exhaustion:2},
-        {drive:3, achievement:2, responsibility:3, anxiety:2, control:2, rest:0, security:1, exhaustion:1}
-    ],
-
-    [
-        {drive:3, achievement:2, responsibility:3, anxiety:2, control:2, rest:0, security:1, exhaustion:1},
-        {drive:0, achievement:0, responsibility:0, anxiety:0, control:0, rest:3, security:2, exhaustion:0},
-        {drive:3, achievement:3, responsibility:2, anxiety:3, control:3, rest:0, security:0, exhaustion:2},
-        {drive:2, achievement:1, responsibility:2, anxiety:2, control:3, rest:0, security:1, exhaustion:1}
-    ],
-
-    [
-        {drive:3, achievement:2, responsibility:3, anxiety:3, control:2, rest:0, security:1, exhaustion:1},
-        {drive:0, achievement:0, responsibility:0, anxiety:0, control:0, rest:3, security:2, exhaustion:0},
-        {drive:3, achievement:3, responsibility:2, anxiety:2, control:3, rest:0, security:0, exhaustion:2},
-        {drive:2, achievement:2, responsibility:2, anxiety:2, control:2, rest:1, security:1, exhaustion:1}
-    ],
-
-    [
-        {drive:3, achievement:3, responsibility:3, anxiety:3, control:3, rest:0, security:0, exhaustion:2},
-        {drive:0, achievement:0, responsibility:0, anxiety:0, control:0, rest:3, security:2, exhaustion:0},
-        {drive:2, achievement:2, responsibility:2, anxiety:2, control:2, rest:1, security:1, exhaustion:1},
-        {drive:3, achievement:2, responsibility:2, anxiety:3, control:3, rest:0, security:1, exhaustion:2}
-    ],
-
-    [
-        {drive:3, achievement:2, responsibility:3, anxiety:3, control:2, rest:0, security:0, exhaustion:2},
-        {drive:0, achievement:0, responsibility:0, anxiety:0, control:0, rest:3, security:2, exhaustion:0},
-        {drive:2, achievement:3, responsibility:2, anxiety:2, control:3, rest:0, security:1, exhaustion:1},
-        {drive:3, achievement:2, responsibility:2, anxiety:2, control:3, rest:0, security:1, exhaustion:1}
-    ],
-
-    [
-        {drive:3, achievement:3, responsibility:3, anxiety:3, control:3, rest:0, security:0, exhaustion:2},
-        {drive:0, achievement:0, responsibility:0, anxiety:0, control:0, rest:3, security:2, exhaustion:0},
-        {drive:2, achievement:2, responsibility:3, anxiety:2, control:3, rest:0, security:1, exhaustion:1},
-        {drive:3, achievement:2, responsibility:2, anxiety:3, control:2, rest:0, security:1, exhaustion:2}
-    ],
-
-    [
-        {drive:3, achievement:2, responsibility:3, anxiety:3, control:2, rest:0, security:1, exhaustion:2},
-        {drive:0, achievement:0, responsibility:0, anxiety:0, control:0, rest:3, security:2, exhaustion:0},
-        {drive:3, achievement:3, responsibility:2, anxiety:2, control:3, rest:0, security:0, exhaustion:1},
-        {drive:2, achievement:2, responsibility:2, anxiety:3, control:3, rest:0, security:1, exhaustion:1}
-    ],
-
-    [
-        {drive:3, achievement:3, responsibility:3, anxiety:3, control:3, rest:0, security:0, exhaustion:2},
-        {drive:0, achievement:0, responsibility:0, anxiety:0, control:0, rest:3, security:2, exhaustion:0},
-        {drive:2, achievement:2, responsibility:3, anxiety:2, control:2, rest:0, security:1, exhaustion:1},
-        {drive:3, achievement:2, responsibility:2, anxiety:3, control:3, rest:0, security:1, exhaustion:2}
-    ],
-
-    [
-        {drive:3, achievement:2, responsibility:2, anxiety:3, control:2, rest:0, security:0, exhaustion:2},
-        {drive:0, achievement:0, responsibility:0, anxiety:0, control:0, rest:3, security:2, exhaustion:0},
-        {drive:3, achievement:3, responsibility:3, anxiety:3, control:3, rest:0, security:1, exhaustion:2},
-        {drive:2, achievement:2, responsibility:2, anxiety:2, control:3, rest:1, security:1, exhaustion:1}
-    ],
-
-    [
-        {drive:3, achievement:3, responsibility:3, anxiety:3, control:3, rest:0, security:0, exhaustion:2},
-        {drive:0, achievement:0, responsibility:0, anxiety:0, control:0, rest:3, security:2, exhaustion:0},
-        {drive:2, achievement:2, responsibility:2, anxiety:2, control:2, rest:1, security:1, exhaustion:1},
-        {drive:3, achievement:2, responsibility:3, anxiety:3, control:3, rest:0, security:1, exhaustion:2}
-    ],
-
-    [
-        {drive:3, achievement:3, responsibility:2, anxiety:3, control:3, rest:0, security:0, exhaustion:2},
-        {drive:0, achievement:0, responsibility:0, anxiety:0, control:0, rest:3, security:2, exhaustion:0},
-        {drive:2, achievement:2, responsibility:3, anxiety:2, control:3, rest:0, security:1, exhaustion:1},
-        {drive:3, achievement:2, responsibility:2, anxiety:3, control:2, rest:0, security:1, exhaustion:2}
-    ],
-
-    [
-        {drive:3, achievement:3, responsibility:3, anxiety:3, control:3, rest:0, security:0, exhaustion:2},
-        {drive:0, achievement:0, responsibility:0, anxiety:0, control:0, rest:3, security:2, exhaustion:0},
-        {drive:2, achievement:2, responsibility:3, anxiety:2, control:2, rest:1, security:1, exhaustion:1},
-        {drive:3, achievement:2, responsibility:2, anxiety:3, control:3, rest:0, security:1, exhaustion:2}
-    ],
-
-    [
-        {drive:3, achievement:3, responsibility:2, anxiety:3, control:3, rest:0, security:0, exhaustion:2},
-        {drive:0, achievement:0, responsibility:0, anxiety:0, control:0, rest:3, security:2, exhaustion:0},
-        {drive:2, achievement:2, responsibility:3, anxiety:2, control:3, rest:0, security:1, exhaustion:1},
-        {drive:3, achievement:2, responsibility:2, anxiety:3, control:2, rest:0, security:1, exhaustion:2}
-    ],
-
-    [
-        {drive:3, achievement:2, responsibility:3, anxiety:3, control:3, rest:0, security:0, exhaustion:2},
-        {drive:0, achievement:0, responsibility:0, anxiety:0, control:0, rest:3, security:2, exhaustion:0},
-        {drive:2, achievement:2, responsibility:2, anxiety:2, control:3, rest:1, security:1, exhaustion:1},
-        {drive:3, achievement:3, responsibility:2, anxiety:3, control:2, rest:0, security:1, exhaustion:2}
-    ],
-
-    [
-        {drive:3, achievement:3, responsibility:3, anxiety:3, control:3, rest:0, security:0, exhaustion:2},
-        {drive:0, achievement:0, responsibility:0, anxiety:0, control:0, rest:3, security:2, exhaustion:0},
-        {drive:2, achievement:2, responsibility:2, anxiety:2, control:2, rest:1, security:1, exhaustion:1},
-        {drive:3, achievement:2, responsibility:3, anxiety:3, control:3, rest:0, security:1, exhaustion:2}
-    ],
-
-    [
-        {drive:3, achievement:2, responsibility:3, anxiety:3, control:3, rest:0, security:0, exhaustion:2},
-        {drive:0, achievement:0, responsibility:0, anxiety:0, control:0, rest:3, security:2, exhaustion:0},
-        {drive:2, achievement:2, responsibility:2, anxiety:2, control:3, rest:1, security:1, exhaustion:1},
-        {drive:3, achievement:3, responsibility:2, anxiety:3, control:2, rest:0, security:1, exhaustion:2}
-    ],
-
-    [
-        {drive:3, achievement:3, responsibility:3, anxiety:3, control:3, rest:0, security:0, exhaustion:2},
-        {drive:0, achievement:0, responsibility:0, anxiety:0, control:0, rest:3, security:2, exhaustion:0},
-        {drive:2, achievement:2, responsibility:3, anxiety:2, control:3, rest:1, security:1, exhaustion:1},
-        {drive:3, achievement:2, responsibility:2, anxiety:3, control:2, rest:0, security:1, exhaustion:2}
-    ],
-
-    [
-        {drive:3, achievement:3, responsibility:3, anxiety:3, control:3, rest:0, security:0, exhaustion:2},
-        {drive:0, achievement:0, responsibility:0, anxiety:0, control:0, rest:3, security:2, exhaustion:0},
-        {drive:2, achievement:2, responsibility:2, anxiety:2, control:3, rest:1, security:1, exhaustion:1},
-        {drive:3, achievement:2, responsibility:3, anxiety:3, control:2, rest:0, security:1, exhaustion:2}
-    ],
-
-    [
-        {drive:3, achievement:3, responsibility:3, anxiety:3, control:3, rest:0, security:0, exhaustion:2},
-        {drive:0, achievement:0, responsibility:0, anxiety:0, control:0, rest:3, security:2, exhaustion:0},
-        {drive:2, achievement:2, responsibility:2, anxiety:2, control:2, rest:1, security:1, exhaustion:1},
-        {drive:3, achievement:2, responsibility:3, anxiety:3, control:3, rest:0, security:1, exhaustion:2}
-    ],
-
-    [
-        {drive:3, achievement:3, responsibility:3, anxiety:3, control:3, rest:0, security:0, exhaustion:2},
-        {drive:0, achievement:0, responsibility:0, anxiety:0, control:0, rest:3, security:2, exhaustion:0},
-        {drive:2, achievement:2, responsibility:2, anxiety:2, control:3, rest:1, security:1, exhaustion:1},
-        {drive:3, achievement:2, responsibility:3, anxiety:3, control:2, rest:0, security:1, exhaustion:2}
-    ],
-
-    [
-        {drive:3, achievement:3, responsibility:3, anxiety:3, control:3, rest:0, security:0, exhaustion:2},
-        {drive:0, achievement:0, responsibility:0, anxiety:0, control:0, rest:3, security:2, exhaustion:0},
-        {drive:2, achievement:2, responsibility:2, anxiety:2, control:2, rest:1, security:1, exhaustion:1},
-        {drive:3, achievement:2, responsibility:3, anxiety:3, control:3, rest:0, security:1, exhaustion:2}
-    ]
-
-];
-
-
-/* =========================================================
-   狀態
-========================================================= */
 
 let currentQuestion = 0;
-
-let answers = new Array(TOTAL_QUESTIONS).fill(null);
-
+let answers = Array(TOTAL_QUESTIONS).fill(null);
+let orders = Array(TOTAL_QUESTIONS).fill(null);
 let userName = "";
 let userBirthday = "";
 
-
-/* =========================================================
-   Fisher-Yates 洗牌
-   每題選項順序會重新排列。
-   
-   注意：
-   答案儲存的是「原始選項 index」，
-   所以即使畫面上的 A/B/C/D 位置改變，
-   分析時仍然可以正確對應。
-========================================================= */
-
-function shuffleOptions(questionIndex) {
-
-    const arr = [0, 1, 2, 3];
-
-    for (let i = arr.length - 1; i > 0; i--) {
-
-        const j = Math.floor(Math.random() * (i + 1));
-
-        [arr[i], arr[j]] = [arr[j], arr[i]];
-    }
-
-    return arr;
+function shuffle(array) {
+  const a = array.slice();
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
 }
-
-
-/* =========================================================
-   每題目前畫面上的排列
-========================================================= */
-
-let currentOrder = [];
-
-
-/* =========================================================
-   開始測驗
-========================================================= */
 
 function startTest() {
+  const nameEl = document.getElementById("name");
+  const birthdayEl = document.getElementById("birthday");
+  const errorEl = document.getElementById("startError");
+  userName = nameEl.value.trim();
+  userBirthday = birthdayEl.value;
+  errorEl.textContent = "";
 
-    userName =
-        document.getElementById("name").value.trim();
+  if (!userName) {
+    errorEl.textContent = "請輸入姓名。";
+    nameEl.focus();
+    return;
+  }
+  if (!userBirthday) {
+    errorEl.textContent = "請選擇生日。";
+    birthdayEl.focus();
+    return;
+  }
 
-    userBirthday =
-        document.getElementById("birthday").value;
-
-    const error =
-        document.getElementById("startError");
-
-    error.textContent = "";
-
-    if (!userName) {
-
-        error.textContent = "請輸入姓名。";
-        return;
-    }
-
-    if (!userBirthday) {
-
-        error.textContent = "請輸入生日。";
-        return;
-    }
-
-    currentQuestion = 0;
-
-    answers =
-        new Array(TOTAL_QUESTIONS).fill(null);
-
-    document
-        .getElementById("startPage")
-        .classList.add("hidden");
-
-    document
-        .getElementById("quizPage")
-        .classList.remove("hidden");
-
-    renderQuestion();
+  currentQuestion = 0;
+  answers = Array(TOTAL_QUESTIONS).fill(null);
+  orders = Array(TOTAL_QUESTIONS).fill(null);
+  document.getElementById("startPage").classList.add("hidden");
+  document.getElementById("quizPage").classList.remove("hidden");
+  renderQuestion();
 }
-
-
-/* =========================================================
-   顯示題目
-========================================================= */
 
 function renderQuestion() {
+  const q = questions[currentQuestion];
+  if (!orders[currentQuestion]) orders[currentQuestion] = shuffle([0,1,2,3]);
 
-    const q = questions[currentQuestion];
+  document.getElementById("questionNumber").textContent = "QUESTION " + String(currentQuestion + 1).padStart(2, "0");
+  document.getElementById("questionText").textContent = q.text;
+  document.getElementById("progressText").textContent = "第 " + (currentQuestion + 1) + " 題";
+  document.getElementById("progressFill").style.width = (((currentQuestion + 1) / TOTAL_QUESTIONS) * 100) + "%";
 
-    document.getElementById("questionNumber")
-        .textContent =
-        `QUESTION ${String(currentQuestion + 1).padStart(2, "0")}`;
+  const labels = ["A","B","C","D"];
+  const box = document.getElementById("options");
+  box.innerHTML = "";
 
-    document.getElementById("questionText")
-        .textContent = q.text;
-
-    document.getElementById("progressText")
-        .textContent =
-        `第 ${currentQuestion + 1} 題`;
-
-    const percentage =
-        ((currentQuestion + 1) / TOTAL_QUESTIONS) * 100;
-
-    document.getElementById("progressFill")
-        .style.width = percentage + "%";
-
-    const optionsContainer =
-        document.getElementById("options");
-
-    optionsContainer.innerHTML = "";
-
-    /*
-       如果之前沒有建立排列，就建立一次。
-       回上一題時必須維持同一個排列。
-    */
-
-    if (!currentOrder[currentQuestion]) {
-
-        currentOrder[currentQuestion] =
-            shuffleOptions(currentQuestion);
-    }
-
-    const order =
-        currentOrder[currentQuestion];
-
-    order.forEach((originalIndex, displayIndex) => {
-
-        const button =
-            document.createElement("button");
-
-        button.className = "option";
-
-        if (answers[currentQuestion] === originalIndex) {
-            button.classList.add("selected");
-        }
-
-        const labels = ["A", "B", "C", "D"];
-
-        button.innerHTML =
-            `<span class="option-label">
-                ${labels[displayIndex]}.
-            </span>
-            ${q.options[originalIndex]}`;
-
-        button.onclick = () => {
-
-            answers[currentQuestion] =
-                originalIndex;
-
-            document
-                .querySelectorAll(".option")
-                .forEach(btn =>
-                    btn.classList.remove("selected")
-                );
-
-            button.classList.add("selected");
-
-            document.getElementById("quizError")
-                .textContent = "";
-        };
-
-        optionsContainer.appendChild(button);
+  orders[currentQuestion].forEach((originalIndex, displayIndex) => {
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "option";
+    if (answers[currentQuestion] === originalIndex) btn.classList.add("selected");
+    const label = document.createElement("span");
+    label.className = "option-label";
+    label.textContent = labels[displayIndex] + ".";
+    btn.appendChild(label);
+    btn.appendChild(document.createTextNode(" " + q.options[originalIndex]));
+    btn.addEventListener("click", () => {
+      answers[currentQuestion] = originalIndex;
+      document.querySelectorAll(".option").forEach(x => x.classList.remove("selected"));
+      btn.classList.add("selected");
+      document.getElementById("quizError").textContent = "";
     });
+    box.appendChild(btn);
+  });
 
-
-    document.getElementById("prevBtn")
-        .style.visibility =
-        currentQuestion === 0
-            ? "hidden"
-            : "visible";
-
-    document.getElementById("nextBtn")
-        .textContent =
-        currentQuestion === TOTAL_QUESTIONS - 1
-            ? "完成測驗"
-            : "下一題";
+  document.getElementById("prevBtn").style.visibility = currentQuestion === 0 ? "hidden" : "visible";
+  document.getElementById("nextBtn").textContent = currentQuestion === TOTAL_QUESTIONS - 1 ? "完成測驗" : "下一題";
 }
-
-
-/* =========================================================
-   下一題
-========================================================= */
 
 function nextQuestion() {
-
-    if (answers[currentQuestion] === null) {
-
-        document.getElementById("quizError")
-            .textContent =
-            "請先選擇一個答案。";
-
-        return;
-    }
-
-    if (currentQuestion < TOTAL_QUESTIONS - 1) {
-
-        currentQuestion++;
-
-        renderQuestion();
-
-    } else {
-
-        finishTest();
-    }
+  if (answers[currentQuestion] === null) {
+    document.getElementById("quizError").textContent = "請先選擇一個答案。";
+    return;
+  }
+  if (currentQuestion < TOTAL_QUESTIONS - 1) {
+    currentQuestion++;
+    renderQuestion();
+  } else {
+    finishTest();
+  }
 }
-
-
-/* =========================================================
-   上一題
-========================================================= */
 
 function previousQuestion() {
-
-    if (currentQuestion > 0) {
-
-        currentQuestion--;
-
-        renderQuestion();
-    }
+  if (currentQuestion > 0) {
+    currentQuestion--;
+    renderQuestion();
+  }
 }
-
-
-/* =========================================================
-   UTF-8 Base64 編碼
-   讓中文姓名可以安全放進結果代碼。
-========================================================= */
 
 function encodeBase64Unicode(text) {
-
-    const bytes =
-        new TextEncoder().encode(text);
-
-    let binary = "";
-
-    bytes.forEach(byte => {
-        binary += String.fromCharCode(byte);
-    });
-
-    return btoa(binary)
-        .replace(/\+/g, "-")
-        .replace(/\//g, "_")
-        .replace(/=+$/, "");
+  const bytes = new TextEncoder().encode(text);
+  let binary = "";
+  for (const byte of bytes) binary += String.fromCharCode(byte);
+  return btoa(binary).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/g, "");
 }
-
-
-/* =========================================================
-   產生結果資料
-
-   注意：
-   這裡不放心理測驗分數。
-   只保存：
-   - 版本
-   - 姓名
-   - 生日
-   - 30題答案
-
-   所以你收到代碼後，可以由分析端重新計算。
-========================================================= */
-
-function createResultData() {
-
-    return {
-        v: TEST_VERSION,
-        name: userName,
-        birthday: userBirthday,
-        answers: answers
-    };
-}
-
-
-/* =========================================================
-   完成測驗
-========================================================= */
 
 function finishTest() {
-
-    const resultData =
-        createResultData();
-
-    const json =
-        JSON.stringify(resultData);
-
-    const encoded =
-        encodeBase64Unicode(json);
-
-    const finalCode =
-        `${TEST_VERSION}-${encoded}`;
-
-    document
-        .getElementById("quizPage")
-        .classList.add("hidden");
-
-    document
-        .getElementById("resultPage")
-        .classList.remove("hidden");
-
-    document
-        .getElementById("resultCode")
-        .textContent = finalCode;
+  const payload = {v: TEST_VERSION, name: userName, birthday: userBirthday, answers: answers};
+  const code = TEST_VERSION + "-" + encodeBase64Unicode(JSON.stringify(payload));
+  document.getElementById("quizPage").classList.add("hidden");
+  document.getElementById("resultPage").classList.remove("hidden");
+  document.getElementById("resultCode").textContent = code;
 }
 
-
-/* =========================================================
-   複製結果
-========================================================= */
-
-function copyResultCode() {
-
-    const code =
-        document
-            .getElementById("resultCode")
-            .textContent;
-
-    navigator.clipboard.writeText(code)
-        .then(() => {
-
-            const button =
-                document.querySelector(".copy-btn");
-
-            button.textContent = "已複製 ✓";
-
-            setTimeout(() => {
-                button.textContent =
-                    "複製結果代碼";
-            }, 1800);
-
-        })
-        .catch(() => {
-
-            alert(
-                "複製失敗，請手動選取結果代碼。"
-            );
-        });
+async function copyResultCode() {
+  const code = document.getElementById("resultCode").textContent;
+  const status = document.getElementById("copyStatus");
+  try {
+    await navigator.clipboard.writeText(code);
+    status.textContent = "已複製結果代碼 ✓";
+  } catch (e) {
+    status.textContent = "瀏覽器不允許自動複製，請選取上方代碼手動複製。";
+  }
 }
 
+document.getElementById("startBtn").addEventListener("click", startTest);
+document.getElementById("nextBtn").addEventListener("click", nextQuestion);
+document.getElementById("prevBtn").addEventListener("click", previousQuestion);
+document.getElementById("copyBtn").addEventListener("click", copyResultCode);
 </script>
-
 </body>
 </html>
