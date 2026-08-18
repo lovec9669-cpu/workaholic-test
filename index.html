@@ -1,137 +1,57 @@
-<!DOCTYPE html>
-<html lang="zh-Hant">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>你真的只是喜歡忙嗎？｜WC30-V2</title>
-<style>
-*{box-sizing:border-box}
-body{margin:0;min-height:100vh;font-family:"Noto Sans TC","Microsoft JhengHei",Arial,sans-serif;background:linear-gradient(135deg,#f5f7ff,#fff7fb);color:#1e293b}
-.container{width:min(760px,92%);margin:auto;padding:28px 0 50px}
-.card{background:#fff;border-radius:24px;padding:34px;box-shadow:0 12px 40px rgba(15,23,42,.08)}
-.hidden{display:none!important}
-h1{margin:0 0 14px;text-align:center;font-size:30px;line-height:1.4}
-.subtitle{text-align:center;color:#64748b;line-height:1.8;margin-bottom:30px}
-label{display:block;font-weight:700;margin:0 0 8px}
-input{width:100%;padding:14px;border:1px solid #cbd5e1;border-radius:12px;font-size:16px;margin-bottom:18px}
-button{border:0;border-radius:13px;padding:14px 18px;font-size:16px;font-weight:700;cursor:pointer}
-.primary{background:#4f46e5;color:#fff;width:100%}
-.primary:hover{background:#4338ca}
-.secondary{background:#e2e8f0;color:#334155}
-.error{color:#dc2626;min-height:22px;margin:8px 0;font-size:14px}
-.progress{margin-bottom:28px}
-.progress-row{display:flex;justify-content:space-between;color:#64748b;font-size:14px;margin-bottom:8px}
-.track{height:8px;background:#e2e8f0;border-radius:99px;overflow:hidden}
-.fill{height:100%;background:#6366f1;transition:width .25s}
-.qno{color:#6366f1;font-weight:800;font-size:14px;margin-bottom:8px}
-.question{font-size:22px;font-weight:700;line-height:1.65;margin-bottom:24px}
-.options{display:grid;gap:12px}
-.option{width:100%;text-align:left;background:#fff;border:1px solid #cbd5e1;color:#334155;line-height:1.65}
-.option:hover{border-color:#818cf8;background:#f8faff}
-.option.selected{border-color:#4f46e5;background:#eef2ff}
-.option-label{color:#4f46e5;font-weight:900;margin-right:8px}
-.nav{display:flex;gap:12px;margin-top:22px}
-.nav button{flex:1}
-.code{margin-top:20px;background:#0f172a;color:#e2e8f0;padding:18px;border-radius:14px;word-break:break-all;font:13px/1.6 monospace}
-.note{margin-top:18px;padding:14px;background:#f1f5f9;border-radius:12px;color:#475569;line-height:1.7;font-size:14px}
-.badge{display:inline-block;padding:6px 10px;border-radius:999px;background:#eef2ff;color:#4f46e5;font-size:12px;font-weight:800;margin-bottom:12px}
-@media(max-width:600px){.container{padding:16px 0}.card{padding:22px 17px;border-radius:18px}h1{font-size:25px}.question{font-size:19px}}
-</style>
-</head>
-<body>
-<div class="container">
-<section id="startPage" class="card">
-<div style="text-align:center"><span class="badge">WC30-V2</span></div>
-<h1>你真的只是喜歡忙嗎？</h1>
-<div class="subtitle">一場不知道自己正在被測什麼的抽象心理測驗。<br>請依照第一直覺回答，不需要猜測「哪個答案比較好」。</div>
-<label for="name">姓名</label>
-<input id="name" type="text" maxlength="30" autocomplete="name" placeholder="請輸入姓名">
-<label for="birthday">生日</label>
-<input id="birthday" type="date" autocomplete="bday">
-<div id="startError" class="error"></div>
-<button id="startBtn" class="primary" type="button">開始測驗</button>
-<div class="note">共 30 題。題目會隨機排列選項；網站不會直接顯示心理結果。</div>
-</section>
-
-<section id="quizPage" class="card hidden">
-<div class="progress">
-<div class="progress-row"><span id="progressText">第 1 題</span><span>30 題</span></div>
-<div class="track"><div id="progressFill" class="fill" style="width:3.33%"></div></div>
-</div>
-<div id="questionNumber" class="qno"></div>
-<div id="questionText" class="question"></div>
-<div id="options" class="options"></div>
-<div id="quizError" class="error"></div>
-<div class="nav">
-<button id="prevBtn" class="secondary" type="button">上一題</button>
-<button id="nextBtn" class="primary" type="button">下一題</button>
-</div>
-</section>
-
-<section id="resultPage" class="card hidden">
-<div style="text-align:center"><span class="badge">WC30-V2</span></div>
-<h1>測驗完成</h1>
-<p style="text-align:center;line-height:1.8">請複製以下結果代碼，交給測驗分析者。</p>
-<div id="resultCode" class="code"></div>
-<button id="copyBtn" class="primary" type="button" style="margin-top:12px">複製結果代碼</button>
-<div id="copyStatus" class="note">結果代碼包含姓名、生日、30 題答案與 V2 計分資料。網站不直接顯示分類結果。</div>
-</section>
-</div>
-
+<!doctype html><html lang="zh-Hant"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>你真的只是喜歡忙嗎？｜WC30-V2</title><style>*{box-sizing:border-box}body{margin:0;background:linear-gradient(135deg,#f5f7ff,#fff7fb);font-family:"Noto Sans TC","Microsoft JhengHei",Arial,sans-serif;color:#1e293b}.wrap{width:min(780px,92%);margin:auto;padding:24px 0 50px}.card{background:#fff;border-radius:24px;padding:30px;box-shadow:0 12px 40px #0f172a14}.hide{display:none!important}h1{text-align:center;line-height:1.4}.sub{text-align:center;color:#64748b;line-height:1.8;margin-bottom:28px}label{display:block;font-weight:700;margin:12px 0 7px}input{width:100%;padding:13px;border:1px solid #cbd5e1;border-radius:12px;font-size:16px}button{border:0;border-radius:12px;padding:13px 16px;font-size:16px;font-weight:700;cursor:pointer}.primary{background:#4f46e5;color:#fff;width:100%}.secondary{background:#e2e8f0;color:#334155}.err{color:#dc2626;min-height:22px}.prog{margin-bottom:25px;color:#64748b;font-size:14px}.track,.bar{height:8px;background:#e2e8f0;border-radius:99px;overflow:hidden}.fill,.bar>i{display:block;height:100%;background:#6366f1}.q{font-size:22px;font-weight:700;line-height:1.65;margin:15px 0 22px}.opts{display:grid;gap:11px}.opt{width:100%;text-align:left;background:#fff;border:1px solid #cbd5e1;color:#334155}.opt.sel{border-color:#4f46e5;background:#eef2ff}.nav{display:flex;gap:12px;margin-top:20px}.nav>*{flex:1}.badge{display:inline-block;padding:5px 9px;border-radius:999px;background:#eef2ff;color:#4f46e5;font-size:12px;font-weight:800}.code{background:#0f172a;color:#e2e8f0;padding:16px;border-radius:12px;word-break:break-all;font:13px/1.6 monospace}.dim{border:1px solid #e2e8f0;border-radius:16px;padding:17px;margin:12px 0}.dimhead{display:flex;justify-content:space-between;gap:10px}.score{font-size:22px;font-weight:900;color:#4f46e5}.dim p,.summary{line-height:1.8;color:#475569}.overall{background:#eef2ff;border-radius:18px;padding:20px;margin:20px 0}.overall strong{font-size:32px;color:#4338ca}.note{background:#f1f5f9;border-radius:12px;padding:14px;line-height:1.7;color:#475569;margin-top:16px}@media(max-width:600px){.card{padding:21px 16px}.q{font-size:19px}}
+</style></head><body><div class="wrap">
+<section id="start" class="card"><div style="text-align:center"><span class="badge">WC30-V2</span></div><h1>你真的只是喜歡忙嗎？</h1><div class="sub">抽象情境心理測驗。請依第一直覺回答，不要猜測哪個答案比較好。<br>完成後網站會直接提供 8 個維度與整體分析。</div><label>姓名</label><input id="name" maxlength="30" placeholder="請輸入姓名"><label>生日</label><input id="birth" type="date"><div id="se" class="err"></div><button id="go" class="primary">開始測驗</button></section>
+<section id="quiz" class="card hide"><div class="prog"><span id="pn"></span><span style="float:right">30 題</span><div class="track"><i id="pf" class="fill" style="width:3.33%"></i></div></div><div id="qn" class="badge"></div><div id="qt" class="q"></div><div id="opts" class="opts"></div><div id="qe" class="err"></div><div class="nav"><button id="prev" class="secondary">上一題</button><button id="next" class="primary">下一題</button></div></section>
+<section id="result" class="card hide"><div style="text-align:center"><span class="badge">WC30-V2 分析結果</span></div><h1 id="rt"></h1><div id="report"></div><h2>結果代碼</h2><div id="code" class="code"></div><button id="copy" class="primary" style="margin-top:12px">複製結果代碼</button><div id="cs" class="note">結果代碼會保存姓名、生日與 30 題答案，方便之後重新分析。</div></section></div>
 <script>
-"use strict";
-const TEST_VERSION="WC30-V2";
-const TOTAL_QUESTIONS=30;
-const DIMENSIONS=["WA","PR","LA","WD","AC","RS","ST","EX"];
-const questions=[
-{"text":"你走進一間有四扇門的房間，裡面沒有任何人。你會先去哪裡？","options":["有一張舒服的椅子","桌上放著一份未完成的清單","門外傳來聲音","一個看起來可以探索的暗門"],"dims":["WA","LA"],"weights":[[0,3],[2,0],[1,1],[3,0]]},
-{"text":"森林裡有一條路，路中央放著一個沒有主人認領的箱子。你會？","options":["直接離開","先放著，下次再看","打開看看裡面是什麼","先確認有沒有人需要處理"],"dims":["PR","WA"],"weights":[[3,2],[2,1],[0,3],[1,2]]},
-{"text":"你得到一張空白日曆，接下來七天完全沒有安排。你第一個念頭是？","options":["終於可以什麼都不排","先把重要事情填進去","看心情決定","找一些事情讓每天都有內容"],"dims":["LA","WA"],"weights":[[3,0],[1,2],[2,1],[0,3]]},
-{"text":"你準備離開一座城市，房間角落還有一個抽屜沒打開。","options":["直接離開","記住它，下次再看","一定要現在打開","如果不影響行程就算了"],"dims":["PR","ST"],"weights":[[3,2],[2,1],[0,3],[3,0]]},
-{"text":"桌上有一本書，看到一半，你突然有了空閒時間。","options":["繼續讀完","放著，之後再說","換去做更有趣的事","先把今天該做的事情處理掉"],"dims":["WD","LA"],"weights":[[3,0],[1,3],[1,2],[2,1]]},
-{"text":"山路上出現一個告示牌：「前方還有一段路。」你會？","options":["繼續走","先休息","看情況，不急著決定","如果今天沒必要，就回頭"],"dims":["WD","PR"],"weights":[[3,0],[1,2],[2,1],[0,3]]},
-{"text":"你房間裡有一盞燈一直亮著，但不影響任何事情。","options":["立刻關掉","有空再處理","懶得管它","研究為什麼會一直亮"],"dims":["LA","AC"],"weights":[[2,2],[1,1],[3,0],[0,3]]},
-{"text":"你收到一張沒有截止日期的紙條，上面寫著：「有空再處理。」","options":["今天就處理","放到明天","等真的需要時再說","先放進抽屜"],"dims":["PR","WA"],"weights":[[0,3],[2,1],[3,0],[2,0]]},
-{"text":"你在旅途中發現一座還沒蓋完的橋。","options":["想辦法把它完成","覺得有人會處理","看看工程進度","繞過去就好"],"dims":["AC","RS"],"weights":[[3,3],[0,1],[2,2],[1,0]]},
-{"text":"晚上已經很累，你突然想起還有一件小事。","options":["現在做掉","明天再說","如果不影響明天就不做","先記下來"],"dims":["ST","EX"],"weights":[[3,2],[0,1],[0,0],[1,2]]},
-{"text":"你得到一個可以讓時間多出兩小時的能力。","options":["拿來睡覺","拿來做一直想做的事","拿來提前處理事情","留著不用"],"dims":["LA","WA"],"weights":[[3,0],[1,3],[0,3],[2,0]]},
-{"text":"四個人把四件事情放在你面前，但都說不急。","options":["全部先處理","挑最重要的一件","放著等有人提醒","看心情決定"],"dims":["RS","PR"],"weights":[[3,1],[2,0],[1,3],[0,2]]},
-{"text":"你正在休息，突然想到明天有一件事情。","options":["繼續休息","立刻處理","寫下來，明天再做","開始查相關資料"],"dims":["ST","EX"],"weights":[[3,0],[0,3],[2,1],[1,2]]},
-{"text":"你看到一張拼圖，只剩最後幾塊。","options":["一定要完成","先收起來","有興趣再做","等有空再處理"],"dims":["AC","ST"],"weights":[[3,2],[0,0],[2,1],[1,1]]},
-{"text":"朋友約你去一個完全沒有安排的地方。","options":["覺得很好，可以放空","想先知道有沒有事情要做","希望有一點目標","到了再說"],"dims":["LA","WA"],"weights":[[3,0],[1,2],[0,3],[2,1]]},
-{"text":"你發現一份報告少了一個小細節，但沒有人注意。","options":["補完整","覺得沒差","先記下來以後處理","確認它會不會影響結果"],"dims":["AC","RS"],"weights":[[3,3],[0,0],[1,2],[2,3]]},
-{"text":"一個房間裡有四張桌子，其中一張上面堆著未整理的東西。","options":["順手整理","完全不碰","有空再整理","先找自己真正需要的東西"],"dims":["LA","PR"],"weights":[[3,0],[3,1],[2,1],[1,2]]},
-{"text":"你已經完成今天最重要的事情，還有一小段時間。","options":["找下一件事情做","直接離開","整理明天要用的東西","做自己想做的事"],"dims":["WA","ST"],"weights":[[3,1],[0,3],[2,2],[1,3]]},
-{"text":"你看到一個門牌寫著「待處理」，但沒有日期。","options":["今天處理","放著","先確認是不是自己的事","等有人提醒"],"dims":["PR","RS"],"weights":[[0,3],[3,0],[1,2],[2,1]]},
-{"text":"旅程中突然多出半天自由時間。","options":["找事情填滿","什麼都不安排","完成原本沒做完的事","去做自己想做的事"],"dims":["WA","LA"],"weights":[[3,0],[0,3],[2,1],[1,2]]},
-{"text":"你正在做一件很麻煩的事情，做到一半有人告訴你可以明天再做。","options":["那就明天","還是今天做完","先停下來","看剩多少再決定"],"dims":["PR","ST"],"weights":[[3,1],[0,3],[2,0],[1,2]]},
-{"text":"你發現自己的行李裡多了一件不屬於你的東西。","options":["立刻處理掉","先放著","想辦法找到主人","如果不影響旅程就算了"],"dims":["RS","LA"],"weights":[[3,2],[1,1],[0,3],[2,0]]},
-{"text":"你看到一座鐘，距離下一班車還有一小時。","options":["找地方坐著","看看附近有沒有事情可以做","提前去月台","安排這一小時"],"dims":["LA","WA"],"weights":[[3,0],[0,3],[1,2],[2,2]]},
-{"text":"你已經很累，但一件重要的事情還差最後一點。","options":["停下來休息","完成它再休息","交給明天","先判斷最後一點到底有多重要"],"dims":["EX","ST"],"weights":[[0,3],[3,3],[0,0],[2,2]]},
-{"text":"你收到一張邀請卡，上面沒有要求你做任何事情。","options":["很高興，終於沒有任務","開始想自己可以做什麼","放著不管","安排其他事情"],"dims":["LA","WA"],"weights":[[3,0],[0,3],[2,1],[1,2]]},
-{"text":"你發現明天有一件事情可以提前完成，但不提前也完全不會有影響。","options":["現在做掉","明天再做","等最後一天","看當天心情"],"dims":["WA","PR"],"weights":[[3,0],[0,2],[1,3],[2,1]]},
-{"text":"你正在休假，手機跳出一則與工作有關的訊息。","options":["立刻查看","等假期結束","看起來緊急才看","完全不碰"],"dims":["ST","EX"],"weights":[[3,2],[0,0],[2,1],[0,3]]},
-{"text":"一個朋友請你幫忙整理一個很大的東西，但沒有說什麼時候要完成。","options":["馬上開始","先問清楚範圍","等他再次提起","有空再做"],"dims":["RS","PR"],"weights":[[3,1],[2,0],[1,3],[0,2]]},
-{"text":"你完成一件事情後，別人說：「還可以再更好。」","options":["再改到最好","覺得已經夠了","問清楚哪裡真的需要改","先放著"],"dims":["AC","EX"],"weights":[[3,2],[0,0],[2,1],[1,3]]},
-{"text":"你今天什麼事情都沒有必須完成。","options":["覺得很舒服","主動找點事情做","把時間留給自己","整理一些未來可能會用到的東西"],"dims":["WA","LA"],"weights":[[0,3],[3,0],[0,3],[2,1]]}
-];
-
-let currentQuestion=0;
-let answers=Array(TOTAL_QUESTIONS).fill(null);
-let orders=Array(TOTAL_QUESTIONS).fill(null);
-let userName="";
-let userBirthday="";
-
-function shuffle(a){const x=a.slice();for(let i=x.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[x[i],x[j]]=[x[j],x[i]];}return x;}
-function startTest(){const n=document.getElementById("name"),b=document.getElementById("birthday"),e=document.getElementById("startError");userName=n.value.trim();userBirthday=b.value;e.textContent="";if(!userName){e.textContent="請輸入姓名。";n.focus();return;}if(!userBirthday){e.textContent="請選擇生日。";b.focus();return;}currentQuestion=0;answers=Array(TOTAL_QUESTIONS).fill(null);orders=Array(TOTAL_QUESTIONS).fill(null);document.getElementById("startPage").classList.add("hidden");document.getElementById("quizPage").classList.remove("hidden");renderQuestion();}
-function renderQuestion(){const q=questions[currentQuestion];if(!orders[currentQuestion])orders[currentQuestion]=shuffle([0,1,2,3]);document.getElementById("questionNumber").textContent="QUESTION "+String(currentQuestion+1).padStart(2,"0");document.getElementById("questionText").textContent=q.text;document.getElementById("progressText").textContent="第 "+(currentQuestion+1)+" 題";document.getElementById("progressFill").style.width=(((currentQuestion+1)/TOTAL_QUESTIONS)*100)+"%";const box=document.getElementById("options");box.innerHTML="";const labels=["A","B","C","D"];orders[currentQuestion].forEach((oi,di)=>{const btn=document.createElement("button");btn.type="button";btn.className="option";if(answers[currentQuestion]===oi)btn.classList.add("selected");const lab=document.createElement("span");lab.className="option-label";lab.textContent=labels[di]+".";btn.appendChild(lab);btn.appendChild(document.createTextNode(" "+q.options[oi]));btn.addEventListener("click",()=>{answers[currentQuestion]=oi;document.querySelectorAll(".option").forEach(x=>x.classList.remove("selected"));btn.classList.add("selected");document.getElementById("quizError").textContent="";});box.appendChild(btn);});document.getElementById("prevBtn").style.visibility=currentQuestion===0?"hidden":"visible";document.getElementById("nextBtn").textContent=currentQuestion===TOTAL_QUESTIONS-1?"完成測驗":"下一題";}
-function nextQuestion(){if(answers[currentQuestion]===null){document.getElementById("quizError").textContent="請先選擇一個答案。";return;}if(currentQuestion<TOTAL_QUESTIONS-1){currentQuestion++;renderQuestion();}else finishTest();}
-function previousQuestion(){if(currentQuestion>0){currentQuestion--;renderQuestion();}}
-function calculateScores(){const raw=Object.fromEntries(DIMENSIONS.map(d=>[d,0]));const max=Object.fromEntries(DIMENSIONS.map(d=>[d,0]));questions.forEach(q=>q.dims.forEach(d=>{max[d]+=3;}));questions.forEach((q,i)=>{const oi=answers[i];if(oi!==null)q.dims.forEach((d,di)=>raw[d]+=q.weights[oi][di]);});const score=Object.fromEntries(DIMENSIONS.map(d=>[d,Math.round(raw[d]/max[d]*100)]));return {raw,max,score};}
-function encodeBase64Unicode(text){const bytes=new TextEncoder().encode(text);let binary="";for(const byte of bytes)binary+=String.fromCharCode(byte);return btoa(binary).replace(/\+/g,"-").replace(/\//g,"_").replace(/=+$/g,"");}
-function finishTest(){const result=calculateScores();const payload={v:TEST_VERSION,name:userName,birthday:userBirthday,answers:answers,scores:result.score};const code=TEST_VERSION+"-"+encodeBase64Unicode(JSON.stringify(payload));document.getElementById("quizPage").classList.add("hidden");document.getElementById("resultPage").classList.remove("hidden");document.getElementById("resultCode").textContent=code;}
-async function copyResultCode(){const code=document.getElementById("resultCode").textContent;const status=document.getElementById("copyStatus");try{await navigator.clipboard.writeText(code);status.textContent="已複製結果代碼 ✓";}catch(e){status.textContent="瀏覽器不允許自動複製，請選取上方代碼手動複製。";}}
-document.getElementById("startBtn").addEventListener("click",startTest);document.getElementById("nextBtn").addEventListener("click",nextQuestion);document.getElementById("prevBtn").addEventListener("click",previousQuestion);document.getElementById("copyBtn").addEventListener("click",copyResultCode);
-</script>
-</body>
-</html>
+const V='WC30-V2',D=['WA','PR','LA','WD','AC','RS','ST','EX'];
+const Q=[
+['你走進一間有四扇門的房間，裡面沒有任何人。你會先去哪裡？',['有一張舒服的椅子','桌上放著一份未完成的清單','門外傳來聲音','一個看起來可以探索的暗門'],['WA','LA'],[[0,3],[2,0],[1,1],[3,0]]],
+['森林裡有一條路，路中央放著一個沒有主人認領的箱子。你會？',['直接離開','先放著，下次再看','打開看看裡面是什麼','先確認有沒有人需要處理'],['PR','WA'],[[3,2],[2,1],[0,3],[1,2]]],
+['你得到一張空白日曆，接下來七天完全沒有安排。你第一個念頭是？',['終於可以什麼都不排','先把重要事情填進去','看心情決定','找一些事情讓每天都有內容'],['LA','WA'],[[3,0],[1,2],[2,1],[0,3]]],
+['你準備離開一座城市，房間角落還有一個抽屜沒打開。',['直接離開','記住它，下次再看','一定要現在打開','如果不影響行程就算了'],['PR','ST'],[[3,2],[2,1],[0,3],[3,0]]],
+['桌上有一本書，看到一半，你突然有了空閒時間。',['繼續讀完','放著，之後再說','換去做更有趣的事','先把今天該做的事情處理掉'],['WD','LA'],[[3,0],[1,3],[1,2],[2,1]]],
+['山路上出現一個告示牌：「前方還有一段路。」你會？',['繼續走','先休息','看情況，不急著決定','如果今天沒必要，就回頭'],['WD','PR'],[[3,0],[1,2],[2,1],[0,3]]],
+['你房間裡有一盞燈一直亮著，但不影響任何事情。',['立刻關掉','有空再處理','懶得管它','研究為什麼會一直亮'],['LA','AC'],[[2,2],[1,1],[3,0],[0,3]]],
+['你收到一張沒有截止日期的紙條，上面寫著：「有空再處理。」',['今天就處理','放到明天','等真的需要時再說','先放進抽屜'],['PR','WA'],[[0,3],[2,1],[3,0],[2,0]]],
+['你在旅途中發現一座還沒蓋完的橋。',['想辦法把它完成','覺得有人會處理','看看工程進度','繞過去就好'],['AC','RS'],[[3,3],[0,1],[2,2],[1,0]]],
+['晚上已經很累，你突然想起還有一件小事。',['現在做掉','明天再說','如果不影響明天就不做','先記下來'],['ST','EX'],[[3,2],[0,1],[0,0],[1,2]]],
+['你得到一個可以讓時間多出兩小時的能力。',['拿來睡覺','拿來做一直想做的事','拿來提前處理事情','留著不用'],['LA','WA'],[[3,0],[1,3],[0,3],[2,0]]],
+['四個人把四件事情放在你面前，但都說不急。',['全部先處理','挑最重要的一件','放著等有人提醒','看心情決定'],['RS','PR'],[[3,1],[2,0],[1,3],[0,2]]],
+['你正在休息，突然想到明天有一件事情。',['繼續休息','立刻處理','寫下來，明天再做','開始查相關資料'],['ST','EX'],[[3,0],[0,3],[2,1],[1,2]]],
+['你看到一張拼圖，只剩最後幾塊。',['一定要完成','先收起來','有興趣再做','等有空再處理'],['AC','ST'],[[3,2],[0,0],[2,1],[1,1]]],
+['朋友約你去一個完全沒有安排的地方。',['覺得很好，可以放空','想先知道有沒有事情要做','希望有一點目標','到了再說'],['LA','WA'],[[3,0],[1,2],[0,3],[2,1]]],
+['你發現一份報告少了一個小細節，但沒有人注意。',['補完整','覺得沒差','先記下來以後處理','確認它會不會影響結果'],['AC','RS'],[[3,3],[0,0],[1,2],[2,3]]],
+['一個房間裡有四張桌子，其中一張上面堆著未整理的東西。',['順手整理','完全不碰','有空再整理','先找自己真正需要的東西'],['LA','PR'],[[3,0],[3,1],[2,1],[1,2]]],
+['你已經完成今天最重要的事情，還有一小段時間。',['找下一件事情做','直接離開','整理明天要用的東西','做自己想做的事'],['WA','ST'],[[3,1],[0,3],[2,2],[1,3]]],
+['你看到一個門牌寫著「待處理」，但沒有日期。',['今天處理','放著','先確認是不是自己的事','等有人提醒'],['PR','RS'],[[0,3],[3,0],[1,2],[2,1]]],
+['旅程中突然多出半天自由時間。',['找事情填滿','什麼都不安排','完成原本沒做完的事','去做自己想做的事'],['WA','LA'],[[3,0],[0,3],[2,1],[1,2]]],
+['你正在做一件很麻煩的事情，做到一半有人告訴你可以明天再做。',['那就明天','還是今天做完','先停下來','看剩多少再決定'],['PR','ST'],[[3,1],[0,3],[2,0],[1,2]]],
+['你發現自己的行李裡多了一件不屬於你的東西。',['立刻處理掉','先放著','想辦法找到主人','如果不影響旅程就算了'],['RS','LA'],[[3,2],[1,1],[0,3],[2,0]]],
+['你看到一座鐘，距離下一班車還有一小時。',['找地方坐著','看看附近有沒有事情可以做','提前去月台','安排這一小時'],['LA','WA'],[[3,0],[0,3],[1,2],[2,2]]],
+['你已經很累，但一件重要的事情還差最後一點。',['停下來休息','完成它再休息','交給明天','先判斷最後一點到底有多重要'],['EX','ST'],[[0,3],[3,3],[0,0],[2,2]]],
+['你收到一張邀請卡，上面沒有要求你做任何事情。',['很高興，終於沒有任務','開始想自己可以做什麼','放著不管','安排其他事情'],['LA','WA'],[[3,0],[0,3],[2,1],[1,2]]],
+['你發現明天有一件事情可以提前完成，但不提前也完全不會有影響。',['現在做掉','明天再做','等最後一天','看當天心情'],['WA','PR'],[[3,0],[0,2],[1,3],[2,1]]],
+['你正在休假，手機跳出一則與工作有關的訊息。',['立刻查看','等假期結束','看起來緊急才看','完全不碰'],['ST','EX'],[[3,2],[0,0],[2,1],[0,3]]],
+['一個朋友請你幫忙整理一個很大的東西，但沒有說什麼時候要完成。',['馬上開始','先問清楚範圍','等他再次提起','有空再做'],['RS','PR'],[[3,1],[2,0],[1,3],[0,2]]],
+['你完成一件事情後，別人說：「還可以再更好。」',['再改到最好','覺得已經夠了','問清楚哪裡真的需要改','先放著'],['AC','EX'],[[3,2],[0,0],[2,1],[1,3]]],
+['你今天什麼事情都沒有必須完成。',['覺得很舒服','主動找點事情做','把時間留給自己','整理一些未來可能會用到的東西'],['WA','LA'],[[0,3],[3,0],[0,3],[2,1]]]
+].map(x=>({text:x[0],options:x[1],dims:x[2],weights:x[3]}));
+const I={WA:['🛋️','工作趨近','沒有外部要求時，你會不會主動找事情做。','很少主動靠近工作，有空時更傾向回到自己的生活。','工作與休息大致平衡。','即使沒有明確要求，也較容易自己啟動工作。'],PR:['🐌','拖延傾向','面對任務時，你傾向立即處理還是往後延。','通常不太需要拖到最後，知道該做就較容易開始。','是否延後會依事情重要性與當下狀態而變。','較容易把事情往後放，尤其沒有期限或壓力時。'],LA:['💤','偷懶傾向','沒有必要工作時，你是否偏好休息、娛樂或把事情放著。','較少需要休息來逃離事情，容易維持活動。','既能休息，也能在需要時投入。','沒有必要時很重視不被工作佔滿的時間。'],WD:['🔥','持續投入','真正開始後，你能不能維持投入。','開始後也容易失去動力，常需要外部期限。','持續力取決於興趣、重要性與壓力。','一旦進入狀態，通常可以維持相當長的投入。'],AC:['🏆','成就需求','你對成果、進步、品質與完成感的需求。','做到合理程度通常就能接受。','重要事情會要求成果，但不一定追求極致。','很在意成果與品質，容易希望事情更好更完整。'],RS:['🧱','責任承擔','你對自己負責的事情與他人期待有多敏感。','較能區分自己的責任，不容易自動替別人扛。','會負責自己的事情，也保留一定界線。','對責任與他人期待敏感，事情落到自己身上通常會處理好。'],ST:['📴','停止困難','工作告一段落後，能不能真正停止並離開工作狀態。','較能關機，把注意力切回生活。','偶爾會把工作帶進休息時間，但仍能抽離。','事情沒收尾時較難真正關機，容易繼續做或一直想。'],EX:['🪫','耗竭續作','已經疲累時，是否仍因工作或責任繼續消耗自己。','累了較能停下來，不太靠硬撐工作。','有時會撐一下，但負荷過高時通常會調整。','即使疲累也可能繼續工作，長期耗竭風險較高.']};
+let idx=0,A=Array(30).fill(null),ORD=Array(30),name='',birth='';
+function sh(a){a=a.slice();for(let i=a.length-1;i;i--){let j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+function start(){name=document.getElementById('name').value.trim();birth=document.getElementById('birth').value;let e=document.getElementById('se');e.textContent='';if(!name){e.textContent='請輸入姓名。';return}if(!birth){e.textContent='請選擇生日。';return}idx=0;A=Array(30).fill(null);ORD=Array(30);document.getElementById('start').classList.add('hide');document.getElementById('quiz').classList.remove('hide');render()}
+function render(){let q=Q[idx];if(!ORD[idx])ORD[idx]=sh([0,1,2,3]);document.getElementById('pn').textContent='第 '+(idx+1)+' 題';document.getElementById('pf').style.width=((idx+1)/30*100)+'%';document.getElementById('qn').textContent='QUESTION '+String(idx+1).padStart(2,'0');document.getElementById('qt').textContent=q.text;let box=document.getElementById('opts');box.innerHTML='';['A','B','C','D'].forEach((l,di)=>{let oi=ORD[idx][di],b=document.createElement('button');b.className='opt'+(A[idx]===oi?' sel':'');b.innerHTML='<b>'+l+'.</b> '+q.options[oi];b.onclick=()=>{A[idx]=oi;render()};box.appendChild(b)});document.getElementById('prev').style.visibility=idx?'visible':'hidden';document.getElementById('next').textContent=idx===29?'完成測驗':'下一題'}
+function next(){let e=document.getElementById('qe');if(A[idx]===null){e.textContent='請先選擇答案。';return}e.textContent='';if(idx<29){idx++;render()}else finish()}
+function prev(){if(idx){idx--;render()}}
+function scores(){let raw=Object.fromEntries(D.map(d=>[d,0])),max=Object.fromEntries(D.map(d=>[d,0]));Q.forEach(q=>q.dims.forEach(d=>max[d]+=3));Q.forEach((q,i)=>q.dims.forEach((d,k)=>raw[d]+=q.weights[A[i]][k]));return Object.fromEntries(D.map(d=>[d,Math.round(raw[d]/max[d]*100)]))}
+function band(s){return s<=24?'很低':s<=39?'偏低':s<=59?'中等':s<=74?'偏高':'很高'}
+function desc(d,s){let x=I[d];return s<=39?x[4]&&x[3]:s<=59?x[4]:x[5]}
+function overall(s){return Math.round(s.WA*.25+s.WD*.2+s.ST*.25+s.EX*.15+s.AC*.1+s.RS*.05)}
+function type(s){if(s.WA<40&&s.LA>=70&&s.WD>=60)return'🛋️ 懶惰型高執行者';if(s.WA>=70&&s.ST>=70)return'🔥 典型工作依附型';if(s.RS>=65&&s.WA<65&&s.ST<60)return'🧱 責任型工作者';if(s.PR>=65&&s.AC>=70&&s.WD>=65)return'⚡ 截止日戰士';if(s.WA<40&&s.ST<40)return'🌿 低工作依附型';if(s.AC>=70&&s.ST<60)return'🎯 成果導向型';return'⚖️ 彈性投入型'}
+function totalText(t){return t<=24?['低工作依附','你通常不會主動追著工作跑，也較能在工作與生活之間切換。']:t<=39?['輕度工作依附','你可以投入工作，但通常不會讓工作長時間佔據心理空間。']:t<=59?['中度工作依附','你具備一定工作投入能力，但責任、期限或重要目標才比較容易把投入拉高。']:t<=74?['高度工作依附','工作較容易進入你的生活與心理空間，若停止困難與耗竭續作也高，工作狂傾向會更明顯。']:['極高度工作依附','工作可能成為生活中高度持續的心理焦點，需要特別留意休息邊界與長期耗竭。']}
+function summary(s,t){let hi=D.slice().sort((a,b)=>s[b]-s[a]).slice(0,3).map(d=>I[d][1]),lo=D.slice().sort((a,b)=>s[a]-s[b]).slice(0,2).map(d=>I[d][1]);let x='你的前三個突出面向是「'+hi.join('、')+'」，相對較低的是「'+lo.join('、')+'」。';if(s.WA<40&&s.LA>=70)x+=' 你對工作的主動趨近很低，同時很重視休息或不做事，因此不像靠工作本身獲得滿足的人。';if(s.WA>=65&&s.ST>=65)x+=' 你同時具有較高的工作趨近與停止困難，工作依附較明顯。';if(s.RS>=65&&s.WA<65)x+=' 你的工作投入比較可能受到責任感推動，而非單純喜歡工作。';if(s.PR>=65&&s.WD>=65)x+=' 你可能呈現平時延後、期限到來後高輸出的模式。';if(s.EX>=65)x+=' 需要特別留意疲累後仍持續工作的情況。';if(s.EX<40&&s.ST<50)x+=' 你的停損與抽離能力較好，累了時較容易讓自己離開工作狀態。';return x+' 整體工作依附指數為 '+t+' 分。最值得觀察的是「想不想工作」與「開始後停不停得下來」之間的落差。'}
+function b64(t){let u=new TextEncoder().encode(t),s='';for(let n of u)s+=String.fromCharCode(n);return btoa(s).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'')}
+function finish(){let S=scores(),T=overall(S),OT=totalText(T),html='<div class="overall"><div>整體工作依附指數</div><strong>'+T+' / 100</strong><h2>'+OT[0]+'</h2><p class="summary">'+OT[1]+'</p><b>'+type(S)+'</b></div><h2>8 個維度完整分析</h2>';D.forEach(d=>{let s=S[d],x=I[d];html+='<div class="dim"><div class="dimhead"><h3>'+x[0]+' '+x[1]+'</h3><span class="score">'+s+' / 100</span></div><div class="bar"><i style="width:'+s+'%"></i></div><p><b>這個維度測什麼：</b>'+x[2]+'</p><p><b>你的分數代表：</b>'+desc(d,s)+'</p><p><b>目前傾向：</b>'+band(s)+'</p></div>'});html+='<div class="note"><b>整體總結</b><p class="summary">'+summary(S,T)+'</p><small>此測驗是自我探索工具，用來描述目前的行為傾向，不是心理或醫療診斷。</small></div>';let payload={v:V,name,birthday:birth,answers:A,scores:S},code=V+'-'+b64(JSON.stringify(payload));document.getElementById('quiz').classList.add('hide');document.getElementById('result').classList.remove('hide');document.getElementById('rt').textContent=name+'的 WC30-V2 分析';document.getElementById('report').innerHTML=html;document.getElementById('code').textContent=code}
+document.getElementById('go').onclick=start;document.getElementById('next').onclick=next;document.getElementById('prev').onclick=prev;document.getElementById('copy').onclick=async()=>{try{await navigator.clipboard.writeText(document.getElementById('code').textContent);document.getElementById('cs').textContent='已複製結果代碼 ✓'}catch(e){document.getElementById('cs').textContent='請手動選取結果代碼複製。'}};
+</script></body></html>
